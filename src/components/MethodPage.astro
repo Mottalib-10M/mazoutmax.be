@@ -2,7 +2,8 @@
 /** Méthode et sources (page de confiance, RECETTE §8.2) : données, estimation, formules, tests, limites, mises à jour. */
 import PageLayout from '../layouts/PageLayout.astro';
 import { route, type Locale } from '../i18n/routes';
-import { P } from '../lib/engine/params';
+import { P, sourceUrl } from '../lib/engine/params';
+import type { SourceKey } from '../lib/engine/params';
 import * as M from '../lib/engine/index';
 import { helpers, REF_DAY } from '../lib/helpers';
 import { breadcrumbSchema, webPageSchema } from '../lib/seo';
@@ -19,7 +20,7 @@ const description = T(
   'MazoutMax 2026 method: official be.STAT tariff read several times a day, next-day estimate with its measured error, formulas, tests and limits of the site.');
 const h1 = T('Méthode de calcul et sources', 'Rekenmethode en bronnen', 'Calculation method and sources');
 const path = route('method', lang);
-const sources = Object.values(P.sources);
+const sources = (Object.keys(P.sources) as SourceKey[]).map((k) => ({ label: P.sources[k].label, url: sourceUrl(k, lang) }));
 const fetched = M.FETCHED_AT.slice(0, 10);
 const s0 = M.series('mazout_lt2000');
 const prods: M.Prod[] = ['mazout_lt2000', 'diesel_b7', 'e10_95', 'lpg'];
