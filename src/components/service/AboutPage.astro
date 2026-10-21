@@ -1,0 +1,63 @@
+---
+/** À propos (page de confiance, RECETTE §8) : qui publie, pourquoi, d'où viennent les chiffres. */
+import PageLayout from '../../layouts/PageLayout.astro';
+import { AUTHOR_NAME, CONTACT_EMAIL, AUTHOR_ROLE } from '../../data/site-config';
+import { route, type Locale } from '../../i18n/routes';
+import { personSchema, organizationSchema, breadcrumbSchema, profilePageSchema } from '../../lib/seo';
+import { helpers } from '../../lib/helpers';
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const H = helpers(lang); const T = H.T;
+const crumb = T('À propos', 'Over ons', 'About');
+const title = T('MazoutMax : qui publie le prix maximum du mazout en 2026', 'MazoutMax: wie de maximumprijs van mazout publiceert, 2026', 'MazoutMax: who publishes the heating oil price page in 2026');
+const description = T(
+  'Qui édite MazoutMax, pourquoi un site indépendant sur le prix maximum du mazout et des carburants belges, d’où viennent les chiffres, comment nous écrire.',
+  'Wie MazoutMax uitgeeft, waarom een onafhankelijke site over de maximumprijs van mazout en brandstof, waar de cijfers vandaan komen en hoe u een fout meldt.',
+  'Who publishes MazoutMax, why an independent site on Belgium’s maximum heating oil and fuel prices, where the figures come from and how to report an error.');
+const mail = `mailto:${CONTACT_EMAIL}`;
+---
+<PageLayout title={title} description={description} lang={lang} jsonLd={[personSchema(lang), organizationSchema(lang), profilePageSchema({ path: route('about', lang), lang }), breadcrumbSchema([{ name: T('Accueil', 'Home', 'Home'), path: route('home', lang) }, { name: crumb, path: route('about', lang) }])]} breadcrumbs={[{ label: crumb }]}>
+  <header class="mb-6"><h1 class="text-3xl font-bold text-navy-900 md:text-4xl">{T('À propos de MazoutMax', 'Over MazoutMax', 'About MazoutMax')}</h1></header>
+  <div class="prose prose-slate max-w-none">
+    <div class="not-prose mb-6"><p class="text-lg font-semibold text-navy-900">{AUTHOR_NAME}</p><p class="text-navy-700">{AUTHOR_ROLE[lang]}</p></div>
+    {lang === 'fr' && <>
+      <p>MazoutMax est édité par Radif Partners. Il répond à la question que se posent chaque jour des milliers de ménages belges chauffés au mazout : combien coûte le litre aujourd’hui, combien coûtera-t-il demain, et que représente ma prochaine livraison ?</p>
+      <h2>Pourquoi ce site existe</h2>
+      <p>Sur ces recherches, les premières pages sont souvent tenues par des sites qui vivent de la vente de mazout ou de la mise en relation avec des négociants : le prix du jour y voisine avec un formulaire qui demande une adresse, un e-mail ou un numéro de téléphone, et le prix de demain y est parfois annoncé sans dire comment. Nous voulions l’inverse : le tarif officiel tel que Statbel le publie, un calcul de livraison au bon palier, et une estimation dont l’erreur est mesurée et publiée.</p>
+      <p>Ce site fait mieux que le premier résultat Google parce qu’il donne le prix maximum officiel du jour et du lendemain relu directement chez Statbel cinq fois par jour, chiffre votre livraison au palier exact sans demander d’adresse, d’e-mail ni de numéro de téléphone, et publie l’écart réel de son estimation au lieu d’une prévision sans preuve.</p>
+      <h2>D’où viennent les chiffres</h2>
+      <p>Tous les prix viennent du tarif officiel des produits pétroliers, fixé par le SPF Économie et diffusé en données ouvertes par Statbel sur be.STAT. Le barème de l’allocation de chauffage vient du Fonds Social Chauffage. Tout est détaillé, formules et tests compris, dans la <a href={route('method', lang)}>méthode de calcul</a>.</p>
+      <h2>Ce que nous ne sommes pas</h2>
+      <p>Radif Partners n’est ni le SPF Économie, ni Statbel, ni le Fonds Social Chauffage, ni un négociant. Nous ne vendons aucun litre, ne touchons aucune commission et ne transmettons aucune demande. Un montant affiché ici est un calcul au prix maximum : votre facture fait foi.</p>
+      <h2>Financement et données</h2><p>Le site est gratuit et sans inscription. Les calculs se font dans votre navigateur et rien de ce que vous tapez n’est enregistré. S’il affiche un jour de la publicité, elle ne sera jamais placée au-dessus d’un calcul ni présentée comme une recommandation.</p>
+      <h2>Trois langues</h2><p>Chaque page existe en français, en néerlandais et en anglais, pour tous les ménages du pays et pour les résidents étrangers qui découvrent le vocabulaire du mazout, du CPAS et du contrat-programme.</p>
+      <h2>Nous écrire</h2><p>Un prix qui ne correspond pas à celui de Statbel, un barème qui a changé, un cas que les calculateurs ne couvrent pas : <a href={mail}>{CONTACT_EMAIL}</a>. Voir aussi la <a href={route('editorial', lang)}>charte éditoriale</a> et les <a href={route('terms', lang)}>mentions légales</a>.</p>
+    </>}
+    {lang === 'nl' && <>
+      <p>MazoutMax wordt uitgegeven door Radif Partners. De site beantwoordt de vraag die duizenden Belgische gezinnen met een mazoutketel zich elke dag stellen: wat kost de liter vandaag, wat kost hij morgen, en wat betekent dat voor mijn volgende levering?</p>
+      <h2>Waarom deze site bestaat</h2>
+      <p>Bij die zoekopdrachten staan bovenaan vaak sites die leven van de verkoop van mazout of van het doorgeven van aanvragen aan handelaars: de prijs van vandaag staat er naast een formulier dat naar een adres, e-mail of telefoonnummer vraagt, en de prijs van morgen wordt soms aangekondigd zonder te zeggen hoe. Wij wilden het omgekeerde: het officiële tarief zoals Statbel het publiceert, een leveringsberekening in de juiste schijf, en een schatting waarvan de fout gemeten en gepubliceerd wordt.</p>
+      <p>Deze site doet het beter dan het eerste resultaat in Google omdat hij de officiële maximumprijs van vandaag en morgen vijf keer per dag rechtstreeks bij Statbel ophaalt, uw levering in de juiste schijf berekent zonder om een adres, e-mail of telefoonnummer te vragen, en de werkelijke afwijking van zijn schatting publiceert in plaats van een voorspelling zonder bewijs.</p>
+      <h2>Waar de cijfers vandaan komen</h2>
+      <p>Alle prijzen komen uit het officiële tarief van de aardolieproducten, vastgelegd door de FOD Economie en als open data verspreid door Statbel op be.STAT. De schaal van de verwarmingstoelage komt van het Sociaal Verwarmingsfonds. Alles staat, met formules en tests, in de <a href={route('method', lang)}>rekenmethode</a>.</p>
+      <h2>Wat we niet zijn</h2>
+      <p>Radif Partners is niet de FOD Economie, niet Statbel, niet het Sociaal Verwarmingsfonds en geen handelaar. We verkopen geen liter, ontvangen geen commissie en geven geen aanvragen door. Een bedrag op deze site is een berekening tegen de maximumprijs: uw factuur is bepalend.</p>
+      <h2>Financiering en gegevens</h2><p>De site is gratis en zonder registratie. De berekeningen gebeuren in uw browser en niets van wat u invult wordt bewaard. Komt er ooit reclame, dan staat die nooit boven een berekening en wordt ze nooit als aanbeveling voorgesteld.</p>
+      <h2>Drie talen</h2><p>Elke pagina bestaat in het Nederlands, het Frans en het Engels, voor alle gezinnen van het land en voor buitenlandse inwoners die de woorden mazout, OCMW en programmaovereenkomst leren kennen.</p>
+      <h2>Contact</h2><p>Een prijs die niet overeenkomt met die van Statbel, een gewijzigde schaal, een geval dat de rekenhulpen niet dekken: <a href={mail}>{CONTACT_EMAIL}</a>. Zie ook het <a href={route('editorial', lang)}>redactiestatuut</a> en de <a href={route('terms', lang)}>disclaimer</a>.</p>
+    </>}
+    {lang === 'en' && <>
+      <p>MazoutMax is published by Radif Partners. It answers the question thousands of Belgian households heated with oil ask every day: what does a litre cost today, what will it cost tomorrow, and what does that mean for my next delivery?</p>
+      <h2>Why this site exists</h2>
+      <p>For these searches the top results are often held by sites that live off selling heating oil or passing requests on to dealers: today’s price sits next to a form asking for an address, an email or a phone number, and tomorrow’s price is sometimes announced without saying how. We wanted the opposite: the official tariff as Statbel publishes it, a delivery calculation in the right band, and an estimate whose error is measured and published.</p>
+      <p>This site does better than the first Google result because it gives today’s and tomorrow’s official maximum price read directly from Statbel five times a day, prices your delivery in the exact band without asking for an address, email or phone number, and publishes the real error of its estimate instead of an unproven forecast.</p>
+      <h2>Where the figures come from</h2>
+      <p>Every price comes from the official tariff of petroleum products, set by the FPS Economy and released as open data by Statbel on be.STAT. The heating allowance scale comes from the Social Heating Fund. Everything, formulas and tests included, is set out in the <a href={route('method', lang)}>calculation method</a>.</p>
+      <h2>What we are not</h2>
+      <p>Radif Partners is not the FPS Economy, Statbel, the Social Heating Fund or a dealer. We sell no litre, take no commission and pass on no request. An amount shown here is a calculation at the maximum price: your invoice is what counts.</p>
+      <h2>Funding and data</h2><p>The site is free and needs no sign-up. Calculations run in your browser and nothing you type is stored. If it ever shows advertising, it will never sit above a calculation or be presented as a recommendation.</p>
+      <h2>Three languages</h2><p>Every page exists in English, French and Dutch, for every household in the country and for foreign residents discovering the vocabulary of mazout, the CPAS/OCMW and the programme contract.</p>
+      <h2>Write to us</h2><p>A price that does not match Statbel’s, a scale that has changed, a case the calculators do not cover: <a href={mail}>{CONTACT_EMAIL}</a>. See also the <a href={route('editorial', lang)}>editorial policy</a> and the <a href={route('terms', lang)}>legal notice</a>.</p>
+    </>}
+  </div>
+</PageLayout>

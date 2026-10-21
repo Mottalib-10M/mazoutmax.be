@@ -1,0 +1,21 @@
+{
+ "name": "MazoutMax",
+ "short_name": "MazoutMax",
+ "description": "Prix maximum officiel du mazout de chauffage, du diesel, de l'essence et du LPG en Belgique, tarif de demain dès sa publication, coût d'une livraison et budget.",
+ "start_url": "/fr/",
+ "display": "standalone",
+ "background_color": "#ffffff",
+ "theme_color": "#A3141F",
+ "icons": [
+  {
+   "src": "/icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png"
+  },
+  {
+   "src": "/icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png"
+  }
+ ]
+}

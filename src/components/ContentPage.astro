@@ -1,0 +1,74 @@
+---
+/**
+ * Rendu d'un guide ou d'une page outil défini dans `src/content/`. Ordre (RECETTE §9.3, §21) :
+ * H1 et chapeau ; page outil : l'outil, puis le bloc citable replié ; guide : le bloc citable, puis
+ * le mini-simulateur, puis le corps. FAQ, pages associées, sources et encart auteur viennent du
+ * PageLayout, avec la FAQ affichée et balisée depuis la même liste (§7).
+ */
+import PageLayout from '../layouts/PageLayout.astro';
+import MiniSim from './calc/MiniSim';
+import Clamp from './Clamp.astro';
+import { DemainCalc, SeuilCalc, HistoriqueTool, BudgetChauffageCalc, AllocationCalc, ProduitCalc, TableauCalc, BudgetVoitureCalc, TarifJour } from './outils/Tools';
+import { route, ROUTES, type Locale } from '../i18n/routes';
+import { label } from '../i18n/nav';
+import { t } from '../i18n/ui';
+import { pageById } from '../lib/guides';
+import { helpers, REF_DAY } from '../lib/helpers';
+import { P } from '../lib/engine/params';
+import { articleSchema, faqSchema, breadcrumbSchema, webPageSchema, webApplicationSchema } from '../lib/seo';
+import { AUTHOR_NAME } from '../data/site-config';
+import type { PageDef } from '../lib/guide-types';
+interface Props { page: PageDef; lang: Locale }
+const { page, lang } = Astro.props;
+const x = page[lang];
+const ui = t(lang);
+const path = route(page.id, lang);
+const H = helpers(lang);
+const parts = x.body(H).split(/<!--(mini:[A-Za-z0-9_]+|tarif:[A-Za-z0-9_]+)-->/);
+const resume = x.resume(H);
+const faqs = x.faqs(H);
+const jsonLd = [articleSchema({ title: x.h1, description: x.description, path, lang }), webPageSchema({ name: x.h1, description: x.description, path, lang }), breadcrumbSchema([{ name: ui.breadcrumbHome, path: route('home', lang) }, { name: x.nav, path }])];
+if (page.tool) jsonLd.push(webApplicationSchema({ name: x.h1, description: x.description, path, lang }));
+if (faqs.length) jsonLd.push(faqSchema(faqs, lang));
+const related = page.related.filter((id) => ROUTES.some((r) => r.id === id)).map((id) => ({ href: route(id, lang), name: label(id, lang), description: pageById(id)?.[lang].card ?? '' }));
+const sources = page.sources.map((k) => ({ name: P.sources[k].label[lang], url: P.sources[k].url }));
+const methodHref = route('method', lang);
+/** Outil de référence de chaque groupe : cible par défaut du bouton des mini-simulateurs. */
+const OUTIL: Record<string, string> = { mazout: 'mazout-demain', carburants: 'prix-carburant', comprendre: 'mazout-demain' };
+const arg = page.toolArg;
+const cible = page.miniHref ?? OUTIL[page.group];
+const miniHref = ROUTES.some((r) => r.id === cible) ? route(cible, lang) : undefined;
+---
+<PageLayout title={x.title} description={x.description} lang={lang} jsonLd={jsonLd} faqs={faqs} related={related} sources={sources} breadcrumbs={[{ label: x.nav }]}>
+  <article>
+    <header class="mb-4">
+      <h1 class="text-[1.75rem] font-bold text-navy-900 max-sm:leading-tight sm:text-3xl md:text-4xl">{x.h1}</h1>
+      <p class="mt-2 text-base text-navy-700 sm:text-lg">{x.intro}</p>
+    </header>
+    {page.tool ? (
+      <>
+        <Clamp text={resume} lang={lang} id={`clamp-${page.id}`} class="mb-3" />
+        <div data-outil class="mb-4">
+          {page.tool === 'demain' && <DemainCalc client:load lang={lang} refDay={REF_DAY} famille={arg} methodHref={methodHref} />}
+          {page.tool === 'seuil' && <SeuilCalc client:load lang={lang} refDay={REF_DAY} methodHref={methodHref} />}
+          {page.tool === 'historique' && <HistoriqueTool client:load lang={lang} refDay={REF_DAY} famille={arg} />}
+          {page.tool === 'budgetChauffage' && <BudgetChauffageCalc client:load lang={lang} refDay={REF_DAY} methodHref={methodHref} />}
+          {page.tool === 'allocation' && <AllocationCalc client:load lang={lang} refDay={REF_DAY} methodHref={methodHref} />}
+          {page.tool === 'produit' && <ProduitCalc client:load lang={lang} refDay={REF_DAY} famille={arg} methodHref={methodHref} />}
+          {page.tool === 'tableau' && <TableauCalc client:load lang={lang} refDay={REF_DAY} famille={arg} methodHref={methodHref} />}
+          {page.tool === 'budgetVoiture' && <BudgetVoitureCalc client:load lang={lang} refDay={REF_DAY} methodHref={methodHref} />}
+        </div>
+        <p class="mb-10 text-sm text-navy-600">{ui.reviewedBy} <a href={route('about', lang)} class="underline hover:text-navy-900">{AUTHOR_NAME}</a> · <a href={route('editorial', lang)} class="underline hover:text-navy-900">{ui.editorialPolicy}</a> · <a href={methodHref} class="underline hover:text-navy-900">{label('method', lang)}</a></p>
+      </>
+    ) : (
+      <>
+        <Clamp text={resume} lang={lang} id={`clamp-${page.id}`} class="mb-3" />
+        {page.mini && <MiniSim client:load spacing="mb-4 mt-3" kind={page.mini} lang={lang} href={miniHref} />}
+        <p class="mb-8 text-sm text-navy-600">{ui.reviewedBy} <a href={route('about', lang)} class="underline hover:text-navy-900">{AUTHOR_NAME}</a> · <a href={route('editorial', lang)} class="underline hover:text-navy-900">{ui.editorialPolicy}</a> · <a href={methodHref} class="underline hover:text-navy-900">{label('method', lang)}</a></p>
+      </>
+    )}
+    <div class="prose prose-slate max-w-none">
+      {parts.map((p, i) => i % 2 === 0 ? <Fragment set:html={p} /> : p.startsWith('tarif:') ? <div data-chrome class="not-prose my-6"><TarifJour client:load lang={lang} refDay={REF_DAY} famille={p.slice(6)} /></div> : <div data-chrome><MiniSim client:load kind={p.slice(5)} lang={lang} href={miniHref} /></div>)}
+    </div>
+  </article>
+</PageLayout>

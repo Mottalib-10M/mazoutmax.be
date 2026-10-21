@@ -1,0 +1,33 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { SITE_URL } from '../../data/site-config';
+import { route, type Locale } from '../../i18n/routes';
+import { breadcrumbSchema } from '../../lib/seo';
+import { helpers } from '../../lib/helpers';
+import { EMBED } from '../../lib/embed';
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const H = helpers(lang); const T = H.T;
+const e = EMBED[lang];
+const code = `<iframe src="${SITE_URL}/embed/${e.slug}/" title="${e.title}" width="100%" height="1100" style="border:0;max-width:1100px" loading="lazy"></iframe>`;
+const title = T('Intégrer le prix maximum du mazout du jour sur votre site', 'De maximumprijs van mazout van vandaag op uw site insluiten', 'Embed today’s maximum heating oil price on your website');
+const description = T(
+  'Intégrez gratuitement en iframe le prix maximum officiel du mazout du jour et de demain et le calcul de livraison : un code à copier, sans inscription ni cookie.',
+  'Sluit de officiële maximumprijs van mazout van vandaag en morgen en de leveringsberekening gratis in als iframe: één code om te kopiëren, zonder registratie of cookie.',
+  'Embed today’s and tomorrow’s official maximum heating oil price and the delivery calculation free of charge as an iframe: one code to copy, no sign-up and no cookie.');
+---
+<PageLayout title={title} description={description} lang={lang} noindex={true} jsonLd={[breadcrumbSchema([{ name: T('Accueil', 'Home', 'Home'), path: route('home', lang) }, { name: 'Widget', path: route('widget', lang) }])]} breadcrumbs={[{ label: 'Widget' }]} showAuthor={false}>
+  <header class="mb-6">
+    <h1 class="text-3xl font-bold text-navy-900 md:text-4xl">{T('Intégrer le tableau des prix', 'De prijstabel insluiten', 'Embed the price table')}</h1>
+    <p class="mt-3 text-lg text-navy-700">{T('Un code à copier, sans inscription ni frais. Communes, CPAS, associations de consommateurs et rédactions l’installent en une minute.', 'Eén code om te kopiëren, zonder registratie of kosten. Gemeenten, OCMW’s, consumentenverenigingen en redacties installeren hem in een minuut.', 'One code to copy, no sign-up and no fee. Municipalities, CPAS/OCMW offices, consumer groups and newsrooms set it up in a minute.')}</p>
+  </header>
+  <div class="prose prose-slate max-w-none">
+    <pre class="overflow-x-auto rounded-lg bg-navy-900 p-4 text-sm text-white"><code>{code}</code></pre>
+    <p>{T('Conditions : le lien affiché sous le tableau reste visible, le contenu n’est pas modifié, il est fourni sans garantie. Les prix se mettent à jour sur ce site cinq fois par jour : votre page en profite sans rien faire.', 'Voorwaarden: de link onder de tabel blijft zichtbaar, de inhoud wordt niet gewijzigd, hij wordt zonder garantie aangeboden. De prijzen worden op deze site vijf keer per dag bijgewerkt: uw pagina profiteert mee zonder iets te doen.', 'Terms: the link under the table stays visible, the content is not altered, and it is provided without warranty. Prices update on this site five times a day: your page benefits without you doing anything.')}</p>
+    <p>{T('Autres langues :', 'Andere talen:', 'Other languages:')} {Object.values(EMBED).filter((x) => x.slug !== e.slug).map((x, i) => <>{i > 0 && ' · '}<code>{`${SITE_URL}/embed/${x.slug}/`}</code></>)}</p>
+    <p>{T('Les volumes saisis par vos visiteurs restent dans leur navigateur et le cadre intégré ne pose aucun cookie. Pour toute demande, passez par la', 'De volumes die uw bezoekers invullen blijven in hun browser en het ingesloten kader plaatst geen cookie. Voor vragen kunt u terecht op de', 'Volumes your visitors enter stay in their browser and the embedded frame sets no cookie. For any request, use the')} <a href={route('contact', lang)}>{T('page contact', 'contactpagina', 'contact page')}</a>.</p>
+  </div>
+  <div class="mt-8 overflow-hidden rounded-xl border border-navy-200">
+    <iframe src={`/embed/${e.slug}/`} title={e.title} width="100%" height="1100" style="border:0" loading="lazy"></iframe>
+  </div>
+</PageLayout>

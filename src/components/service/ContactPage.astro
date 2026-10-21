@@ -1,0 +1,44 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import LegalIdentity from '../LegalIdentity.astro';
+import { AUTHOR_NAME, CONTACT_EMAIL, LAST_UPDATED, SITE_NAMES } from '../../data/site-config';
+import { route, type Locale } from '../../i18n/routes';
+import { contactPageSchema } from '../../lib/seo';
+import { helpers } from '../../lib/helpers';
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const H = helpers(lang); const T = H.T;
+const description = T(
+  'Écrire à l’éditeur de MazoutMax : signaler un prix qui ne correspond pas au tarif officiel de Statbel, poser une question sur la méthode ou intégrer le tableau des prix.',
+  'Schrijf de uitgever van MazoutMax: meld een prijs die niet overeenkomt met het officiële tarief van Statbel, stel een vraag over de methode of sluit de prijstabel in.',
+  'Write to the publisher of MazoutMax: report a price that does not match Statbel’s official tariff, ask about the method, or embed the price table on your own site.');
+const mail = `mailto:${CONTACT_EMAIL}`;
+---
+<PageLayout title={`Contact – ${SITE_NAMES[lang]}`} description={description} lang={lang} noindex={true} jsonLd={[contactPageSchema({ name: 'Contact', description, path: route('contact', lang), lang })]} breadcrumbs={[{ label: 'Contact' }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+    <h1>Contact</h1>
+    {lang === 'fr' && <>
+      <p>Une seule adresse, lue chaque semaine : <a href={mail}>{CONTACT_EMAIL}</a>. Il n’y a pas de ligne téléphonique et nous ne rappelons personne : ce site ne vend rien.</p>
+      <h2>Signaler une erreur</h2><p>Pour un prix, indiquez le produit, la date et la valeur que publie be.STAT pour ce jour. Pour l’allocation de chauffage, joignez la page du Fonds Social Chauffage qui contredit notre barème. Un écart confirmé est corrigé et devient un test, comme le prévoit la <a href={route('editorial', lang)}>charte éditoriale</a>.</p>
+      <h2>Ce que nous ne pouvons pas faire</h2><p>Nous ne livrons pas de mazout, ne connaissons pas les prix des négociants et ne décidons pas des allocations : pour une commande, adressez-vous à un négociant ; pour une allocation, au CPAS de votre commune ; pour une plainte sur un prix, au vendeur d’abord.</p>
+      <h2>Intégrer le tableau</h2><p>Communes, CPAS, associations et rédactions peuvent intégrer gratuitement le calcul de livraison et le tableau des prix : le code est sur la page <a href={route('widget', lang)}>Intégrer le tableau</a>.</p>
+      <h2>Éditeur</h2>
+    </>}
+    {lang === 'nl' && <>
+      <p>Eén adres, elke week gelezen: <a href={mail}>{CONTACT_EMAIL}</a>. Er is geen telefoonlijn en we bellen niemand terug: deze site verkoopt niets.</p>
+      <h2>Een fout melden</h2><p>Voor een prijs: vermeld het product, de datum en de waarde die be.STAT voor die dag publiceert. Voor de verwarmingstoelage: voeg de pagina van het Sociaal Verwarmingsfonds toe die onze schaal tegenspreekt. Een bevestigde afwijking wordt verbeterd en een test, zoals het <a href={route('editorial', lang)}>redactiestatuut</a> voorziet.</p>
+      <h2>Wat we niet kunnen doen</h2><p>We leveren geen mazout, kennen de prijzen van de handelaars niet en beslissen niet over toelagen: voor een bestelling wendt u zich tot een handelaar; voor een toelage tot het OCMW van uw gemeente; voor een klacht over een prijs eerst tot de verkoper.</p>
+      <h2>De tabel insluiten</h2><p>Gemeenten, OCMW’s, verenigingen en redacties kunnen de leveringsberekening en de prijstabel gratis insluiten: de code staat op de pagina <a href={route('widget', lang)}>Tabel insluiten</a>.</p>
+      <h2>Uitgever</h2>
+    </>}
+    {lang === 'en' && <>
+      <p>One address, read every week: <a href={mail}>{CONTACT_EMAIL}</a>. There is no phone line and we call nobody back: this site sells nothing.</p>
+      <h2>Report an error</h2><p>For a price, give the product, the date and the value be.STAT publishes for that day. For the heating allowance, attach the Social Heating Fund page that contradicts our scale. A confirmed gap is corrected and becomes a test, as the <a href={route('editorial', lang)}>editorial policy</a> sets out.</p>
+      <h2>What we cannot do</h2><p>We do not deliver heating oil, do not know dealers’ prices and do not decide on allowances: to order, contact a dealer; for an allowance, your municipality’s CPAS/OCMW; for a complaint about a price, the seller first.</p>
+      <h2>Embed the table</h2><p>Municipalities, CPAS/OCMW offices, associations and newsrooms can embed the delivery calculation and the price table free of charge: the code is on the <a href={route('widget', lang)}>Embed the table</a> page.</p>
+      <h2>Publisher</h2>
+    </>}
+    <LegalIdentity lang={lang} />
+    <p>{T(`${AUTHOR_NAME} répond du contenu de MazoutMax ; l’identité complète figure dans les`, `${AUTHOR_NAME} is verantwoordelijk voor de inhoud van MazoutMax; de volledige gegevens staan in de`, `${AUTHOR_NAME} is responsible for the content of MazoutMax; full details are in the`)} <a href={route('terms', lang)}>{T('mentions légales', 'disclaimer', 'legal notice')}</a>. {T('Page revue le', 'Pagina nagekeken op', 'Page reviewed on')} {H.date(LAST_UPDATED)}.</p>
+  </div>
+</PageLayout>

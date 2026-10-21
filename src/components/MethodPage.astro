@@ -1,0 +1,155 @@
+---
+/** Méthode et sources (page de confiance, RECETTE §8.2) : données, estimation, formules, tests, limites, mises à jour. */
+import PageLayout from '../layouts/PageLayout.astro';
+import { route, type Locale } from '../i18n/routes';
+import { P } from '../lib/engine/params';
+import * as M from '../lib/engine/index';
+import { helpers, REF_DAY } from '../lib/helpers';
+import { breadcrumbSchema, webPageSchema } from '../lib/seo';
+import { CONTACT_EMAIL } from '../data/site-config';
+import { BUILD_TODAY } from '../lib/today';
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const H = helpers(lang);
+const { T, l3, num, pct, date, eur, cts } = H;
+const title = T('Tarif officiel du mazout : méthode de calcul MazoutMax 2026', 'Officieel mazouttarief: rekenmethode van MazoutMax 2026', 'Official heating oil tariff: the MazoutMax 2026 method');
+const description = T(
+  'Méthode 2026 de MazoutMax : relevé du tarif officiel be.STAT plusieurs fois par jour, estimation du lendemain et son écart mesuré, formules, tests et limites.',
+  'Methode 2026 van MazoutMax: officieel tarief van be.STAT meermaals per dag opgehaald, schatting voor morgen met gemeten afwijking, formules, tests en grenzen.',
+  'MazoutMax 2026 method: official be.STAT tariff read several times a day, next-day estimate with its measured error, formulas, tests and limits of the site.');
+const h1 = T('Méthode de calcul et sources', 'Rekenmethode en bronnen', 'Calculation method and sources');
+const path = route('method', lang);
+const sources = Object.values(P.sources);
+const fetched = M.FETCHED_AT.slice(0, 10);
+const s0 = M.series('mazout_lt2000');
+const prods: M.Prod[] = ['mazout_lt2000', 'diesel_b7', 'e10_95', 'lpg'];
+const bt = prods.map((k) => ({ k, y: M.backtest(k, 364), m: M.backtest(k, 28), all: M.changeStats(k) }));
+const jours = [1, 2, 3, 4, 5, 6, 0];
+const wdRows = jours.map((d) => [M.nomJour(d, lang), ...prods.map((k) => { const s = M.changeStats(k, d); return `${num(s.changed)} / ${num(s.days)}`; })]);
+const ex = M.livraison(1500, M.priceOn('mazout_lt2000', REF_DAY)!, M.priceOn('mazout_ge2000', REF_DAY)!);
+const exS = M.seuil2000(1500, M.priceOn('mazout_lt2000', REF_DAY)!, M.priceOn('mazout_ge2000', REF_DAY)!);
+const t28 = P.contrat.tarif_28_fevrier, t27 = P.contrat.tarif_27_mars;
+const tableBt = H.table(
+  [T('Produit', 'Product', 'Product'), T('Jours avec un nouveau tarif', 'Dagen met een nieuw tarief', 'Days with a new tariff'), T('Écart moyen, 52 semaines', 'Gemiddelde afwijking, 52 weken', 'Average error, 52 weeks'), T('Écart moyen, 4 semaines', 'Gemiddelde afwijking, 4 weken', 'Average error, 4 weeks'), T('Écart ≤ 1 cent', 'Afwijking ≤ 1 cent', 'Error ≤ 1 cent')],
+  bt.map((b) => [M.COURT[b.k][lang], `${num(b.all.changed)} / ${num(b.all.days)}`, cts(b.y.mae).replace(/^[+−±]/, ''), cts(b.m.mae).replace(/^[+−±]/, ''), pct(b.y.within1c, 0)]),
+  T('Erreur de l’estimation « dernier tarif publié » recalculée sur la série be.STAT à chaque construction du site.', 'Fout van de schatting « laatst gepubliceerd tarief », bij elke build herberekend op de be.STAT-reeks.', 'Error of the “last published tariff” estimate, recalculated on the be.STAT series at every build.'),
+  ['l', 'r', 'r', 'r', 'r']);
+const tableWd = H.table([T('Jour du nouveau tarif', 'Dag van het nieuwe tarief', 'Day of the new tariff'), ...prods.map((k) => M.COURT[k][lang])], wdRows,
+  T('Nombre de jours où un nouveau prix maximum est entré en vigueur, par jour de la semaine, sur la série be.STAT.', 'Aantal dagen waarop een nieuwe maximumprijs in werking trad, per weekdag, op de be.STAT-reeks.', 'Number of days on which a new maximum price came into force, by weekday, on the be.STAT series.'), ['l', 'r', 'r', 'r', 'r']);
+---
+<PageLayout title={title} description={description} lang={lang} jsonLd={[webPageSchema({ name: h1, description, path, lang }), breadcrumbSchema([{ name: T('Accueil', 'Home', 'Home'), path: route('home', lang) }, { name: h1, path }])]} breadcrumbs={[{ label: h1 }]}>
+  <header class="mb-6"><h1 class="text-3xl font-bold text-navy-900 md:text-4xl">{h1}</h1></header>
+  <div class="prose prose-slate max-w-none">
+    {lang === 'fr' && <>
+      <p>Un seul jeu de données fait tourner le site : le tarif officiel des produits pétroliers, que le SPF Économie fixe et que Statbel diffuse sur sa plateforme be.STAT. Il est relevé par un script rejouable du dépôt, daté et lu par toutes les pages : aucun prix n’est tapé à la main dans un texte. Les seuls chiffres fixes sont ceux du Fonds Social Chauffage et le taux de TVA, rangés dans un fichier de paramètres daté.</p>
+      <h2>Le tarif officiel : relu chez Statbel plusieurs fois par jour</h2>
+      <p>Le script <code>scripts/update-data.mjs</code> interroge l’interface ouverte de be.STAT et lit quatre tableaux : le tarif des 365 derniers jours, le dernier tarif hors TVA et TVA comprise, les moyennes des 24 derniers mois et celles des 8 dernières années. Il contrôle qu’aucun jour ne manque, que chaque prix reste entre 0,20 € et 5 € le litre, et refuse une série plus ancienne que la précédente. Une tâche planifiée reconstruit et republie le site cinq fois par jour. Si Statbel ne répond pas, la page garde le dernier relevé réussi et l’écrit. Dernier relevé : <time datetime={fetched}>{date(fetched)}</time> ; {num(M.PRODS.length)} produits, du {date(s0[0][0])} au {date(M.LAST_DAY)}. Les données de Statbel sont publiées sous licence CC BY 4.0 : elles sont reprises avec leur source.</p>
+      <p>Le tarif d’un jour est souvent publié la veille : quand la série contient déjà le lendemain, le site l’affiche comme tarif officiel de demain. La proposition de loi DOC 56 1452/001 de la Chambre cite, pour le 28 février 2026, un maximum de {eur(t28.mazout_lt2000, 4)} pour le mazout sous 2 000 litres, et {eur(t27.mazout_lt2000, 4)} pour le 27 mars 2026. Les tests du site vérifient que la série be.STAT redonne ces valeurs, au millième près.</p>
+      <h2>L’estimation du lendemain, et ce qu’elle vaut</h2>
+      <p>Quand le tarif du lendemain n’est pas encore publié, le site affiche une estimation, toujours marquée comme telle. Le contrat-programme calcule le prix maximum à partir des cotations internationales des produits, selon l’annexe technique du 9 octobre 2006 ; ces cotations sont payantes et ne sont pas publiées, si bien qu’aucun site ne peut refaire le calcul officiel à l’avance sans les acheter. Nous n’inventons donc pas de formule. L’estimation centrale est le dernier tarif publié : c’est, sur l’année écoulée, l’estimateur qui se trompe le moins, mieux qu’un prolongement de la dernière hausse ou baisse (un test le vérifie à chaque construction). Autour d’elle, la fourchette reprend les variations réellement observées le même jour de la semaine (10 % des cas en dessous, 10 % au-dessus), et la probabilité affichée est la part de ces jours où un nouveau tarif est entré en vigueur.</p>
+      <Fragment set:html={tableBt} />
+      <p>Le prix ne change pas au même rythme selon le jour. Le mazout bouge presque chaque jour ouvrable ; le diesel et l’essence beaucoup moins souvent ; le lundi, aucun nouveau tarif ou presque n’entre en vigueur.</p>
+      <Fragment set:html={tableWd} />
+      <h2>Les formules</h2>
+      <ul>
+        <li>Livraison de mazout : litres × prix maximum du palier. Sous 2 000 litres, le prix « moins de 2 000 L » ; à partir de 2 000 litres, le prix « 2 000 L et plus », pour tout le volume. Exemple vérifié : 1 500 litres = {eur(ex.total)} au tarif du {date(REF_DAY)}.</li>
+        <li>TVA contenue : montant × 0,21 ÷ 1,21. Le taux de 21 % est celui que donnent les prix hors TVA et TVA comprise du dernier tarif.</li>
+        <li>Seuil de 2 000 litres : volume équivalent = 2 000 × prix du palier supérieur ÷ prix du palier inférieur ({num(exS.equivalent)} litres au tarif du jour) ; au-delà, commander 2 000 litres coûte moins cher.</li>
+        <li>Allocation du Fonds Social Chauffage : litres retenus (au plus {num(P.fonds.litres_max_an)} par année civile) × montant par litre du barème, de 14 à 20 cents selon le prix facturé.</li>
+        <li>Budget voiture : kilomètres × consommation aux 100 km ÷ 100 × prix maximum.</li>
+      </ul>
+      <h2>Les tests qui bloquent la publication</h2>
+      <ul>
+        <li>La série : treize produits, au moins 300 jours chacun, aucun trou, prix plausibles, palier de 2 000 litres toujours moins cher.</li>
+        <li>Le recoupement avec les tarifs cités par la Chambre (28 février et 27 mars 2026), tant qu’ils restent dans la fenêtre de 365 jours.</li>
+        <li>Livraison, TVA, seuil, budgets et barème du Fonds Social Chauffage, au centime, y compris les bornes du barème.</li>
+        <li>L’estimation : jamais affichée quand le tarif est publié, fourchette qui contient le prix central, retour au dernier jour publié si le relevé est en retard.</li>
+        <li>Chaque mini-simulateur, dans les trois langues, sans valeur manquante.</li>
+      </ul>
+      <h2>Ce que le site ne fait pas</h2>
+      <ul>
+        <li>Il ne connaît pas les prix des négociants : le prix maximum est un plafond, beaucoup de livraisons se font en dessous.</li>
+        <li>Il ne prévoit pas le prix au-delà du lendemain.</li>
+        <li>Il ne décide pas de l’allocation du Fonds Social Chauffage : seul le CPAS le fait, après enquête.</li>
+        <li>Il ne traite ni le gaz naturel ni l’électricité, dont les prix ne sont pas plafonnés de la même façon.</li>
+      </ul>
+      <h2>Mises à jour</h2>
+      <p>Tarif : cinq relevés par jour. Barème du Fonds Social Chauffage : relu à chaque changement annoncé par le Fonds. Une erreur signalée à <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> est vérifiée sur la source, corrigée, puis transformée en test. Voir la <a href={route('editorial', lang)}>charte éditoriale</a>.</p>
+    </>}
+    {lang === 'nl' && <>
+      <p>Eén gegevensset drijft de site aan: het officiële tarief van de aardolieproducten, dat de FOD Economie vastlegt en Statbel op zijn platform be.STAT verspreidt. Een herhaalbaar script uit de repository haalt het op, dateert het, en alle pagina’s lezen het: geen enkele prijs wordt met de hand in een tekst getypt. De enige vaste cijfers zijn die van het Sociaal Verwarmingsfonds en het btw-tarief, in een gedateerd parameterbestand.</p>
+      <h2>Het officiële tarief: meermaals per dag bij Statbel opgehaald</h2>
+      <p>Het script <code>scripts/update-data.mjs</code> bevraagt de open interface van be.STAT en leest vier tabellen: het tarief van de laatste 365 dagen, het laatste tarief zonder en met btw, de gemiddelden van de laatste 24 maanden en die van de laatste 8 jaar. Het controleert dat er geen dag ontbreekt, dat elke prijs tussen 0,20 en 5 euro per liter blijft, en weigert een reeks die ouder is dan de vorige. Een geplande taak bouwt en publiceert de site vijf keer per dag opnieuw. Antwoordt Statbel niet, dan blijft de laatste geslaagde opvraging staan, met haar datum. Laatste opvraging: <time datetime={fetched}>{date(fetched)}</time>; {num(M.PRODS.length)} producten, van {date(s0[0][0])} tot {date(M.LAST_DAY)}. De gegevens van Statbel staan onder licentie CC BY 4.0 en worden met bronvermelding overgenomen.</p>
+      <p>Het tarief van een dag wordt vaak de dag ervoor gepubliceerd: staat de volgende dag al in de reeks, dan toont de site die als officieel tarief van morgen. Het wetsvoorstel DOC 56 1452/001 van de Kamer noemt voor 28 februari 2026 een maximum van {eur(t28.mazout_lt2000, 4)} voor mazout onder 2.000 liter, en voor 27 maart 2026 {eur(t27.mazout_lt2000, 4)}. De tests van de site controleren dat de be.STAT-reeks die waarden tot op een duizendste teruggeeft.</p>
+      <h2>De schatting voor morgen, en wat ze waard is</h2>
+      <p>Is het tarief van morgen nog niet gepubliceerd, dan toont de site een schatting, altijd als zodanig vermeld. De programmaovereenkomst berekent de maximumprijs uit de internationale noteringen van de producten, volgens de technische bijlage van 9 oktober 2006; die noteringen zijn betalend en niet openbaar, zodat geen enkele site de officiële berekening vooraf kan overdoen zonder ze te kopen. We verzinnen dus geen formule. De centrale schatting is het laatst gepubliceerde tarief: over het voorbije jaar is dat de schatter die het minst afwijkt, beter dan de laatste stijging of daling doortrekken (een test controleert dat bij elke build). De vork eromheen neemt de schommelingen over die op dezelfde weekdag werkelijk zijn waargenomen (10 % van de gevallen eronder, 10 % erboven), en de getoonde kans is het aandeel van die dagen waarop een nieuw tarief in werking trad.</p>
+      <Fragment set:html={tableBt} />
+      <p>De prijs verandert niet op elke dag even vaak. Mazout beweegt bijna elke werkdag; diesel en benzine veel minder vaak; op maandag treedt zo goed als nooit een nieuw tarief in werking.</p>
+      <Fragment set:html={tableWd} />
+      <h2>De formules</h2>
+      <ul>
+        <li>Levering van mazout: liters × maximumprijs van de schijf. Onder 2.000 liter de prijs « minder dan 2.000 l »; vanaf 2.000 liter de prijs « vanaf 2.000 l », voor het hele volume. Gecontroleerd voorbeeld: 1.500 liter = {eur(ex.total)} tegen het tarief van {date(REF_DAY)}.</li>
+        <li>Inbegrepen btw: bedrag × 0,21 ÷ 1,21. Het tarief van 21 % volgt uit de prijzen zonder en met btw van het laatste tarief.</li>
+        <li>Drempel van 2.000 liter: gelijkwaardig volume = 2.000 × prijs van de hogere schijf ÷ prijs van de lagere schijf ({num(exS.equivalent)} liter tegen het tarief van vandaag); daarboven kost 2.000 liter bestellen minder.</li>
+        <li>Toelage van het Sociaal Verwarmingsfonds: weerhouden liters (hoogstens {num(P.fonds.litres_max_an)} per kalenderjaar) × bedrag per liter uit de schaal, van 14 tot 20 cent naargelang de gefactureerde prijs.</li>
+        <li>Autobudget: kilometers × verbruik per 100 km ÷ 100 × maximumprijs.</li>
+      </ul>
+      <h2>Tests die de publicatie tegenhouden</h2>
+      <ul>
+        <li>De reeks: dertien producten, elk minstens 300 dagen, geen gaten, plausibele prijzen, schijf vanaf 2.000 liter altijd goedkoper.</li>
+        <li>De vergelijking met de tarieven die de Kamer noemt (28 februari en 27 maart 2026), zolang ze binnen het venster van 365 dagen vallen.</li>
+        <li>Levering, btw, drempel, budgetten en schaal van het Sociaal Verwarmingsfonds, tot op de cent, grenzen van de schaal inbegrepen.</li>
+        <li>De schatting: nooit getoond als het tarief gepubliceerd is, vork die de centrale prijs bevat, terugval op de laatst gepubliceerde dag bij een achterstand.</li>
+        <li>Elke mini-rekenhulp, in de drie talen, zonder ontbrekende waarde.</li>
+      </ul>
+      <h2>Wat de site niet doet</h2>
+      <ul>
+        <li>Hij kent de prijzen van de handelaars niet: de maximumprijs is een plafond, veel leveringen gebeuren eronder.</li>
+        <li>Hij voorspelt de prijs niet verder dan morgen.</li>
+        <li>Hij beslist niet over de toelage van het Sociaal Verwarmingsfonds: dat doet alleen het OCMW, na onderzoek.</li>
+        <li>Hij behandelt aardgas en elektriciteit niet, waarvan de prijzen niet op dezelfde manier begrensd zijn.</li>
+      </ul>
+      <h2>Bijwerkingen</h2>
+      <p>Tarief: vijf opvragingen per dag. Schaal van het Sociaal Verwarmingsfonds: herlezen bij elke wijziging die het Fonds aankondigt. Een fout gemeld via <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> wordt aan de bron getoetst, verbeterd en daarna een test. Zie het <a href={route('editorial', lang)}>redactiestatuut</a>.</p>
+    </>}
+    {lang === 'en' && <>
+      <p>A single dataset drives the site: the official tariff of petroleum products, which the FPS Economy sets and Statbel releases on its be.STAT platform. A replayable script in the repository reads it, dates it, and every page uses it: no price is typed by hand into a text. The only fixed figures are those of the Social Heating Fund and the VAT rate, kept in a dated parameter file.</p>
+      <h2>The official tariff: read from Statbel several times a day</h2>
+      <p>The script <code>scripts/update-data.mjs</code> queries be.STAT’s open interface and reads four tables: the tariff for the last 365 days, the latest tariff excluding and including VAT, the averages of the last 24 months and those of the last 8 years. It checks that no day is missing, that every price stays between €0.20 and €5 a litre, and refuses a series older than the previous one. A scheduled job rebuilds and republishes the site five times a day. If Statbel does not answer, the last successful reading is kept and its date stays on screen. Last reading: <time datetime={fetched}>{date(fetched)}</time>; {num(M.PRODS.length)} products, from {date(s0[0][0])} to {date(M.LAST_DAY)}. Statbel data are published under the CC BY 4.0 licence and are reused with their source.</p>
+      <p>A day’s tariff is often published the day before: when the series already holds tomorrow, the site shows it as tomorrow’s official tariff. The Chamber’s bill DOC 56 1452/001 quotes a maximum of {eur(t28.mazout_lt2000, 4)} for heating oil under 2,000 litres on 28 February 2026, and {eur(t27.mazout_lt2000, 4)} on 27 March 2026. The site’s tests check that the be.STAT series gives back those values to within a thousandth.</p>
+      <h2>The next-day estimate, and what it is worth</h2>
+      <p>When tomorrow’s tariff is not yet published, the site shows an estimate, always labelled as such. The programme contract calculates the maximum price from international product quotations, under the technical annex of 9 October 2006; those quotations are paid for and not published, so no site can redo the official calculation in advance without buying them. We therefore do not make up a formula. The central estimate is the last published tariff: over the past year it is the estimator with the smallest error, better than extending the latest rise or fall (a test checks this at every build). Around it, the range uses the changes actually seen on the same weekday (10% of cases below, 10% above), and the probability shown is the share of those days on which a new tariff came into force.</p>
+      <Fragment set:html={tableBt} />
+      <p>The price does not move at the same pace every day. Heating oil changes almost every working day; diesel and petrol far less often; on Mondays almost no new tariff comes into force.</p>
+      <Fragment set:html={tableWd} />
+      <h2>The formulas</h2>
+      <ul>
+        <li>Heating-oil delivery: litres × the band’s maximum price. Under 2,000 litres, the “under 2,000 L” price; from 2,000 litres, the “2,000 L or more” price, for the whole volume. Checked example: 1,500 litres = {eur(ex.total)} at the tariff of {date(REF_DAY)}.</li>
+        <li>VAT included: amount × 0.21 ÷ 1.21. The 21% rate is the one given by the latest tariff’s prices excluding and including VAT.</li>
+        <li>2,000-litre threshold: equivalent volume = 2,000 × upper-band price ÷ lower-band price ({num(exS.equivalent)} litres at today’s tariff); above it, ordering 2,000 litres costs less.</li>
+        <li>Social Heating Fund allowance: litres taken into account (at most {num(P.fonds.litres_max_an)} per calendar year) × the scale’s amount per litre, from 14 to 20 cents depending on the invoiced price.</li>
+        <li>Car budget: kilometres × consumption per 100 km ÷ 100 × maximum price.</li>
+      </ul>
+      <h2>Tests that block publication</h2>
+      <ul>
+        <li>The series: thirteen products, at least 300 days each, no gaps, plausible prices, the 2,000-litre band always cheaper.</li>
+        <li>The cross-check against the tariffs quoted by the Chamber (28 February and 27 March 2026), as long as they stay within the 365-day window.</li>
+        <li>Delivery, VAT, threshold, budgets and the Social Heating Fund scale, to the cent, scale boundaries included.</li>
+        <li>The estimate: never shown when the tariff is published, a range that contains the central price, fallback to the last published day when a reading is late.</li>
+        <li>Every mini-calculator, in all three languages, with no missing value.</li>
+      </ul>
+      <h2>What the site does not do</h2>
+      <ul>
+        <li>It does not know dealers’ prices: the maximum price is a ceiling, and many deliveries are made below it.</li>
+        <li>It does not forecast the price beyond tomorrow.</li>
+        <li>It does not decide on the Social Heating Fund allowance: only the CPAS/OCMW does, after an assessment.</li>
+        <li>It does not cover natural gas or electricity, whose prices are not capped in the same way.</li>
+      </ul>
+      <h2>Updates</h2>
+      <p>Tariff: five readings a day. Social Heating Fund scale: reread whenever the Fund announces a change. An error reported to <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> is checked against the source, corrected and turned into a test. See the <a href={route('editorial', lang)}>editorial policy</a>.</p>
+    </>}
+    <h2>{T('Toutes les sources', 'Alle bronnen', 'All sources')}</h2>
+    <ul>{sources.map((s) => <li><a href={s.url} rel="nofollow noopener" target="_blank">{s.label[lang]}</a></li>)}</ul>
+    <p class="text-sm text-navy-600">{T('Paramètres relevés le', 'Parameters opgehaald op', 'Parameters read on')} <time datetime={P.retrieved_at}>{date(P.retrieved_at)}</time> · {T('tarif relevé le', 'tarief opgehaald op', 'tariff read on')} <time datetime={fetched}>{date(fetched)}</time> · {T('page reconstruite le', 'pagina herbouwd op', 'page rebuilt on')} <time datetime={BUILD_TODAY}>{date(BUILD_TODAY)}</time>.</p>
+  </div>
+</PageLayout>

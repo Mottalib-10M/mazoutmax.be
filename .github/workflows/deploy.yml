@@ -1,0 +1,79 @@
+name: Tarif officiel du jour, build et déploiement
+
+# Le tarif officiel des produits pétroliers (SPF Économie) est diffusé par Statbel sur be.STAT ;
+# le tarif d'un jour y figure souvent dès la veille. Le site se reconstruit cinq fois par jour :
+# 23:10 UTC (après minuit à Bruxelles, la page change de date), puis 05:30, 10:30, 14:30 et
+# 18:30 UTC pour saisir le tarif du lendemain dès sa publication. À chaque passage : relevé
+# be.STAT (scripts/update-data.mjs), tests du moteur, build, publication sur GitHub Pages, et le
+# fichier du tarif est recommité s'il a changé. Si be.STAT ne répond pas, le relevé précédent est
+# gardé (le script n'écrit rien) et le site est reconstruit avec lui, date du relevé affichée.
+# Aucune clé d'API : les données de Statbel sont ouvertes (CC BY 4.0).
+on:
+  push:
+    branches: ['main']
+  workflow_dispatch:
+  schedule:
+    - cron: '10 23 * * *'
+    - cron: '30 5 * * *'
+    - cron: '30 10 * * *'
+    - cron: '30 14 * * *'
+    - cron: '30 18 * * *'
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Relevé du tarif officiel (be.STAT, Statbel)
+        continue-on-error: true
+        run: node scripts/update-data.mjs
+      - name: Tests du moteur
+        run: npx vitest run
+      - name: Build (avec contrôle des snippets)
+        run: npm run build
+      - name: Recommit du fichier du tarif s'il a changé
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: |
+          git config user.name "releve-tarif"
+          git config user.email "releve-tarif@users.noreply.github.com"
+          git add src/data/tarif.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Tarif officiel : relevé be.STAT du $(date -u +%F)" && git push || echo "push refusé, relevé gardé pour le prochain passage"
+          fi
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+      - name: Checkout (script IndexNow)
+        uses: actions/checkout@v4
+      - name: Ping IndexNow
+        continue-on-error: true
+        run: bash scripts/indexnow.sh https://be-mazout-carburants.example

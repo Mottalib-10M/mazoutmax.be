@@ -1,0 +1,59 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { AUTHOR_NAME, CONTACT_EMAIL, LAST_UPDATED, SITE_NAMES } from '../../data/site-config';
+import { route, type Locale } from '../../i18n/routes';
+import { helpers } from '../../lib/helpers';
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const H = helpers(lang); const T = H.T;
+const crumb = T('Charte éditoriale', 'Redactiestatuut', 'Editorial policy');
+const description = T(
+  'D’où viennent les prix maximums publiés sur MazoutMax, qui en répond, à quel rythme ils sont relus, comment l’estimation est signalée et ce qui se passe en cas d’erreur.',
+  'Waar de maximumprijzen op MazoutMax vandaan komen, wie ervoor instaat, hoe vaak ze worden opgehaald, hoe de schatting wordt aangeduid en wat er bij een fout gebeurt.',
+  'Where the maximum prices on MazoutMax come from, who answers for them, how often they are read, how the estimate is labelled and what happens when an error is found.');
+const mail = `mailto:${CONTACT_EMAIL}`;
+---
+<PageLayout title={`${crumb} – ${SITE_NAMES[lang]}`} description={description} lang={lang} noindex={true} breadcrumbs={[{ label: crumb }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+    {lang === 'fr' && <>
+      <h1>Charte éditoriale et politique de correction</h1>
+      <p>Un prix maximum faux, et un ménage compare son devis à un plafond qui n’existe pas. Voici d’où viennent nos chiffres, qui en répond et ce que nous faisons quand l’un d’eux est faux.</p>
+      <h2>Responsabilité</h2><p>{AUTHOR_NAME} répond de chaque prix affiché, de chaque estimation et de chaque formule. Un écart avec be.STAT se signale à <a href={mail}>{CONTACT_EMAIL}</a> et se vérifie sur la source.</p>
+      <h2>Sources primaires uniquement</h2>
+      <ul><li><strong>Statbel (be.STAT)</strong> : tarif officiel des produits pétroliers, quotidien, mensuel et annuel ;</li><li><strong>le SPF Économie</strong> : cadre du prix maximum ;</li><li><strong>la Chambre des représentants</strong> : documents parlementaires sur le contrat-programme ;</li><li><strong>le Fonds Social Chauffage</strong> : barème et conditions de l’allocation.</li></ul>
+      <p>Aucun prix n’est repris d’un site de négociant ou de comparaison.</p>
+      <h2>L’estimation, toujours signalée</h2><p>Tant que le tarif du lendemain n’est pas publié, le site affiche une estimation, nommée ainsi partout où elle apparaît, avec sa fourchette et son erreur mesurée. Elle n’est jamais présentée comme un tarif.</p>
+      <h2>Contrôles avant publication</h2><p>Chaque reconstruction vérifie la série (aucun jour manquant, prix plausibles), recoupe les tarifs cités par la Chambre et rejoue les calculs au centime. Une série douteuse bloque la mise à jour au lieu d’être affichée.</p>
+      <h2>Rythme de mise à jour</h2><p>Tarif : cinq relevés par jour. Barème du Fonds : à chaque changement. La date affichée vient du dernier relevé.</p>
+      <h2>Traitement des erreurs</h2><ol><li>Vérification contre la source primaire.</li><li>Correction des données ou du code, ajout d’un test.</li><li>Nouvelle date sur les pages concernées.</li></ol>
+      <h2>Indépendance</h2><p>Aucun lien commercial avec un négociant, une station ou un fournisseur d’énergie. Toute relation de ce type serait indiquée dans le texte.</p>
+    </>}
+    {lang === 'nl' && <>
+      <h1>Redactiestatuut en correctiebeleid</h1>
+      <p>Een foute maximumprijs, en een gezin vergelijkt zijn offerte met een plafond dat niet bestaat. Hier staat waar onze cijfers vandaan komen, wie ervoor instaat en wat we doen als er één niet klopt.</p>
+      <h2>Verantwoordelijkheid</h2><p>{AUTHOR_NAME} staat in voor elke getoonde prijs, elke schatting en elke formule. Een afwijking met be.STAT meldt u via <a href={mail}>{CONTACT_EMAIL}</a>; we toetsen ze aan de bron.</p>
+      <h2>Uitsluitend primaire bronnen</h2>
+      <ul><li><strong>Statbel (be.STAT)</strong>: officieel tarief van de aardolieproducten, per dag, maand en jaar;</li><li><strong>de FOD Economie</strong>: kader van de maximumprijs;</li><li><strong>de Kamer van volksvertegenwoordigers</strong>: parlementaire documenten over de programmaovereenkomst;</li><li><strong>het Sociaal Verwarmingsfonds</strong>: schaal en voorwaarden van de toelage.</li></ul>
+      <p>Geen enkele prijs komt van een handelaars- of vergelijkingssite.</p>
+      <h2>De schatting, altijd aangeduid</h2><p>Zolang het tarief van morgen niet gepubliceerd is, toont de site een schatting, overal zo genoemd, met haar vork en haar gemeten fout. Ze wordt nooit als tarief voorgesteld.</p>
+      <h2>Controles vóór publicatie</h2><p>Elke build controleert de reeks (geen ontbrekende dag, plausibele prijzen), vergelijkt met de tarieven die de Kamer noemt en herrekent alles tot op de cent. Een twijfelachtige reeks houdt de bijwerking tegen in plaats van getoond te worden.</p>
+      <h2>Ritme van bijwerking</h2><p>Tarief: vijf opvragingen per dag. Schaal van het Fonds: bij elke wijziging. De getoonde datum komt van de laatste opvraging.</p>
+      <h2>Omgaan met fouten</h2><ol><li>Toetsing aan de primaire bron.</li><li>Verbetering van de gegevens of de code, plus een test.</li><li>Nieuwe datum op de betrokken pagina’s.</li></ol>
+      <h2>Onafhankelijkheid</h2><p>Geen commerciële band met een handelaar, een tankstation of een energieleverancier. Zo’n band zou in de tekst vermeld worden.</p>
+    </>}
+    {lang === 'en' && <>
+      <h1>Editorial and corrections policy</h1>
+      <p>A wrong maximum price, and a household compares its quote with a ceiling that does not exist. Here is where our figures come from, who answers for them and what we do when one is wrong.</p>
+      <h2>Responsibility</h2><p>{AUTHOR_NAME} answers for every price shown, every estimate and every formula. A gap with be.STAT can be reported to <a href={mail}>{CONTACT_EMAIL}</a> and is checked against the source.</p>
+      <h2>Primary sources only</h2>
+      <ul><li><strong>Statbel (be.STAT)</strong>: official tariff of petroleum products, daily, monthly and yearly;</li><li><strong>the FPS Economy</strong>: the maximum-price framework;</li><li><strong>the Chamber of Representatives</strong>: parliamentary documents on the programme contract;</li><li><strong>the Social Heating Fund</strong>: allowance scale and conditions.</li></ul>
+      <p>No price is taken from a dealer or comparison site.</p>
+      <h2>The estimate, always labelled</h2><p>Until tomorrow’s tariff is published, the site shows an estimate, called that wherever it appears, with its range and measured error. It is never presented as a tariff.</p>
+      <h2>Checks before publication</h2><p>Every rebuild checks the series (no missing day, plausible prices), cross-checks the tariffs quoted by the Chamber and reruns the calculations to the cent. A doubtful series blocks the update instead of being shown.</p>
+      <h2>Update rhythm</h2><p>Tariff: five readings a day. Fund scale: at every change. The date shown comes from the last reading.</p>
+      <h2>Handling errors</h2><ol><li>Check against the primary source.</li><li>Fix the data or code and add a test.</li><li>New date on the pages concerned.</li></ol>
+      <h2>Independence</h2><p>No commercial link with any dealer, filling station or energy supplier. Any such relationship would be stated in the text.</p>
+    </>}
+    <p>{T('Voir aussi la', 'Zie ook de', 'See also the')} <a href={route('method', lang)}>{T('méthode de calcul', 'rekenmethode', 'calculation method')}</a>. {T('Version :', 'Versie:', 'Version:')} {H.date(LAST_UPDATED)}.</p>
+  </div>
+</PageLayout>

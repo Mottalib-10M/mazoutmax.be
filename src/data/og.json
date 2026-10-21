@@ -1,0 +1,27 @@
+{
+ "accent": "#A3141F",
+ "symbol": "L",
+ "variants": [
+  {
+   "file": "og-fr.png",
+   "title": "Prix du mazout aujourd'hui\net demain en Belgique",
+   "subtitle": "Mazout · Diesel B7 · Essence 95 E10 et 98 · LPG",
+   "badge": "Tarif officiel des produits pétroliers, relu chaque jour",
+   "brand": "MazoutMax"
+  },
+  {
+   "file": "og-nl.png",
+   "title": "Mazoutprijs vandaag\nen morgen in België",
+   "subtitle": "Mazout · Diesel B7 · Benzine 95 E10 en 98 · LPG",
+   "badge": "Officieel tarief aardolieproducten, dagelijks herlezen",
+   "brand": "MazoutMax"
+  },
+  {
+   "file": "og-en.png",
+   "title": "Belgian heating oil price\ntoday and tomorrow",
+   "subtitle": "Heating oil · Diesel B7 · Petrol 95 E10 and 98 · LPG",
+   "badge": "Official petroleum tariff, read every day",
+   "brand": "MazoutMax"
+  }
+ ]
+}

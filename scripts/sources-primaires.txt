@@ -1,0 +1,17 @@
+# Statbel, office belge de statistique (SPF Économie) : diffuse le tarif officiel des produits pétroliers sur be.STAT.
+statbel.fgov.be
+
+# be.STAT, plateforme de données ouvertes de Statbel : séries quotidiennes, mensuelles et annuelles du tarif officiel.
+bestat.statbel.fgov.be
+
+# SPF Économie (Service public fédéral) : fixe le prix maximum des produits pétroliers (contrat-programme).
+economie.fgov.be
+
+# Chambre des représentants de Belgique : documents parlementaires (DOC 56 1452/001 sur le contrat-programme).
+lachambre.be
+
+# Fonds Social Chauffage, qui verse par les CPAS l'allocation de chauffage : barème, plafonds et conditions officiels.
+fondschauffage.be
+
+# Sociaal Verwarmingsfonds, version néerlandophone du même organisme.
+verwarmingsfonds.be

@@ -1,0 +1,49 @@
+{
+ "_lisezmoi": "Paramètres fixes du site (RECETTE §4). Les prix maximums ne sont PAS ici : ils viennent chaque jour de be.STAT dans src/data/tarif.json (scripts/update-data.mjs). Ici : barème du Fonds Social Chauffage lu le 2026-10-21 sur fondschauffage.be (pages « Quel est le montant », « Qui peut en bénéficier », « Comment demander »), seuil de 2 000 litres du tarif officiel, taux de TVA déduit de la vue be.STAT « dernier changement » (prix hors TVA et TVA comprise), et mécanisme du contrat-programme tel que décrit par la proposition de loi DOC 56 1452/001 de la Chambre (30 mars 2026).",
+ "year": 2026,
+ "retrieved_at": "2026-10-21",
+ "valid_from": "2026-09-01",
+ "valid_to": "2026-12-31",
+ "seuil_litres": 2000,
+ "tva": 0.21,
+ "fonds": {
+  "litres_max_an": 1500,
+  "forfait_pompe": 210,
+  "delai_jours": 60,
+  "revenu_plafond": 25817.27,
+  "revenu_par_charge": 4777.36,
+  "revenu_charge_max_net": 4100,
+  "revenus_depuis": "2026-09-01",
+  "bareme": [
+   { "jusqua": 1.35, "cents": 14 },
+   { "jusqua": 1.375, "cents": 15 },
+   { "jusqua": 1.4, "cents": 16 },
+   { "jusqua": 1.425, "cents": 17 },
+   { "jusqua": 1.45, "cents": 18 },
+   { "jusqua": 1.475, "cents": 19 },
+   { "jusqua": null, "cents": 20 }
+  ]
+ },
+ "contrat": {
+  "annexe_date": "2006-10-09",
+  "doc_chambre": "DOC 56 1452/001",
+  "doc_chambre_date": "2026-03-30",
+  "tarif_28_fevrier": { "mazout_lt2000": 0.8724, "mazout_ge2000": 0.8322, "diesel_b7": 1.758, "e10_95": 1.634, "e5_98": 1.723 },
+  "tarif_27_mars": { "mazout_lt2000": 1.2958, "mazout_ge2000": 1.2556, "diesel_b7": 2.163, "e10_95": 1.863, "e5_98": 1.929 }
+ },
+ "sources": {
+  "bestatJour": { "url": "https://bestat.statbel.fgov.be/bestat/crosstable.xhtml?view=00881a30-7ec8-4117-93c3-c9e661b3dbd4", "label": { "fr": "be.STAT (Statbel) : tarif officiel des produits pétroliers, 365 derniers changements", "nl": "be.STAT (Statbel): officieel tarief van de aardolieproducten, laatste 365 wijzigingen", "en": "be.STAT (Statbel): official tariff of petroleum products, last 365 changes" } },
+  "bestatDernier": { "url": "https://bestat.statbel.fgov.be/bestat/crosstable.xhtml?view=665e2960-bf86-4d64-b4a8-90f2d30ea892", "label": { "fr": "be.STAT (Statbel) : dernier tarif officiel, hors TVA et TVA comprise", "nl": "be.STAT (Statbel): laatste officieel tarief, zonder en met btw", "en": "be.STAT (Statbel): latest official tariff, excluding and including VAT" } },
+  "bestatMois": { "url": "https://bestat.statbel.fgov.be/bestat/crosstable.xhtml?view=b2be867c-947a-47d3-8098-80a5071204b1", "label": { "fr": "be.STAT (Statbel) : moyennes mensuelles du tarif officiel, 24 derniers mois", "nl": "be.STAT (Statbel): maandgemiddelden van het officiële tarief, laatste 24 maanden", "en": "be.STAT (Statbel): monthly averages of the official tariff, last 24 months" } },
+  "bestatAn": { "url": "https://bestat.statbel.fgov.be/bestat/crosstable.xhtml?view=e30e694a-3403-45ff-8bb3-df71505ac817", "label": { "fr": "be.STAT (Statbel) : moyennes annuelles du tarif officiel, 8 dernières années", "nl": "be.STAT (Statbel): jaargemiddelden van het officiële tarief, laatste 8 jaar", "en": "be.STAT (Statbel): yearly averages of the official tariff, last 8 years" } },
+  "statbelPetrole": { "url": "https://statbel.fgov.be/fr/themes/energie/prix-du-petrole", "label": { "fr": "Statbel : prix du pétrole (page thématique)", "nl": "Statbel: prijs van aardolieproducten (themapagina)", "en": "Statbel: petrol prices (topic page)" } },
+  "statbelLicence": { "url": "https://statbel.fgov.be/fr/open-data", "label": { "fr": "Statbel : open data sous licence CC BY 4.0", "nl": "Statbel: open data onder licentie CC BY 4.0", "en": "Statbel: open data under the CC BY 4.0 licence" } },
+  "chambreContrat": { "url": "https://www.lachambre.be/site/wwwcfm/flwb/flwbcheckpdf.cfm?docn=56K1452001&language=fr", "label": { "fr": "Chambre des représentants, DOC 56 1452/001 (30 mars 2026) : contrat-programme et tarifs officiels", "nl": "Kamer van volksvertegenwoordigers, DOC 56 1452/001 (30 maart 2026): programmaovereenkomst en officiële tarieven", "en": "Belgian Chamber of Representatives, DOC 56 1452/001 (30 March 2026): programme contract and official tariffs" } },
+  "fondsMontant": { "url": "https://www.fondschauffage.be/conditions/quel-est-le-montant", "label": { "fr": "Fonds Social Chauffage : montant de l'allocation", "nl": "Sociaal Verwarmingsfonds: bedrag van de toelage (Franstalige pagina)", "en": "Social Heating Fund: amount of the allowance (French page)" } },
+  "fondsBedrag": { "url": "https://www.verwarmingsfonds.be/voorwaarden/hoeveel-bedraagt-de-toelage", "label": { "fr": "Sociaal Verwarmingsfonds : hoeveel bedraagt de toelage (page néerlandaise)", "nl": "Sociaal Verwarmingsfonds: hoeveel bedraagt de toelage", "en": "Sociaal Verwarmingsfonds: amount of the allowance (Dutch page)" } },
+  "fondsQui": { "url": "https://www.fondschauffage.be/conditions/qui-peut-b%C3%A9n%C3%A9ficier", "label": { "fr": "Fonds Social Chauffage : qui peut en bénéficier", "nl": "Sociaal Verwarmingsfonds: wie heeft recht (Franstalige pagina)", "en": "Social Heating Fund: who is eligible (French page)" } },
+  "fondsDemande": { "url": "https://www.fondschauffage.be/conditions/comment-demander", "label": { "fr": "Fonds Social Chauffage : comment demander l'allocation", "nl": "Sociaal Verwarmingsfonds: toelage aanvragen (Franstalige pagina)", "en": "Social Heating Fund: how to apply (French page)" } },
+  "fondsPrix": { "url": "https://www.fondschauffage.be/ma-facture-%C3%A9nergie/prix-mazout-fioul-gaz-propane-p%C3%A9trole-lampant", "label": { "fr": "Fonds Social Chauffage : prix maximums officiels et contrat-programme", "nl": "Sociaal Verwarmingsfonds: officiële maximumprijzen (Franstalige pagina)", "en": "Social Heating Fund: official maximum prices (French page)" } },
+  "spfTarif": { "url": "https://economie.fgov.be/fr/themes/energie/prix-de-lenergie/prix-maximum-des-produits/tarif-officiel-des-produits", "label": { "fr": "SPF Économie : tarif officiel des produits pétroliers", "nl": "FOD Economie: officieel tarief van de aardolieproducten", "en": "FPS Economy: official tariff of petroleum products" } }
+ }
+}

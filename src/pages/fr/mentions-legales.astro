@@ -1,0 +1,37 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import LegalIdentity from '../../components/LegalIdentity.astro';
+import { AUTHOR_NAME, CLARITY_ID, CONTACT_EMAIL, GA4_ID, LAST_UPDATED, LEGAL, SITE_NAMES, SITE_URL } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+const lang = 'fr';
+const title = `Mentions légales – ${SITE_NAMES[lang]}`;
+const description = 'Éditeur, directeur de la publication, hébergeur, absence de conseil, propriété intellectuelle, données personnelles et droit applicable.';
+---
+{/* Page générée par scripts/gen-legal-pages.py (trame, décision GA4 du 2026-10-17). Ne pas
+     retoucher à la main : relancer le script. Un passage propre au site se garde entre
+     les marqueurs site:debut et site:fin. */}
+<PageLayout title={title} description={description} lang={lang} noindex={true} breadcrumbs={[{ label: 'Mentions légales' }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+    <h1>Mentions légales</h1>
+    <p>Informations publiées en application de l’article 6 III-1 de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l’économie numérique.</p>
+    <h2>Éditeur du site</h2>
+    <LegalIdentity lang={lang} />
+    <p>Directeur de la publication : {AUTHOR_NAME}, responsable des contenus publiés sur {SITE_URL}.</p>
+    <h2>Hébergeur</h2>
+    <LegalIdentity mode="hosting" lang={lang} />
+    <h2>Objet du site et absence de conseil</h2>
+    <p>Le site met gratuitement à disposition des calculateurs et des guides, à titre informatif. Les résultats sont des estimations calculées à partir des textes et barèmes officiels cités sur chaque page ; ils ne constituent ni un conseil personnalisé, ni une décision, ni un engagement de l’administration. Méthode et limites : <a href={route('method', lang)}>méthode</a>.</p>
+    <h2>Limites de responsabilité</h2>
+    <p>Les paramètres sont mis à jour et les calculs vérifiés sur des cas de référence, sans garantie d’absence d’erreur. L’éditeur ne peut être tenu responsable d’une décision prise sur la seule base d’une estimation. Une erreur se signale par la page <a href={route('contact', lang)}>contact</a>.</p>
+    <h2>Propriété intellectuelle</h2>
+    <p>Textes, graphismes et code restent la propriété de l’éditeur ; les courtes citations sont autorisées avec un lien vers la page d’origine.</p>
+    {/* gen-legal-pages:terms */}
+    <h2>Données personnelles et cookies</h2>
+    {GA4_ID ? (<p>Les saisies des calculateurs ne quittent pas votre navigateur. Le site dépose des cookies de mesure d’audience Google Analytics (<code>_ga</code>, <code>_ga_{GA4_ID.replace('G-', '')}</code>, 13 mois au plus), sans publicité{CLARITY_ID && ' ; la stabilité des pages est mesurée avec Microsoft Clarity, sans cookie'}. Détails, base juridique et moyens de vous y opposer : <a href={route('privacy', lang)}>politique de confidentialité</a> et page <a href={route('cookies', lang)}>cookies</a>.</p>) : (<p>Les saisies des calculateurs ne quittent pas votre navigateur et le site ne dépose aucun cookie{CLARITY_ID && ' ; la stabilité des pages est mesurée de façon anonyme avec Microsoft Clarity, sans cookie'}. Voir la <a href={route('privacy', lang)}>politique de confidentialité</a> et la page <a href={route('cookies', lang)}>cookies</a>.</p>)}
+    {/* /gen-legal-pages:terms */}
+    <h2>Signalement</h2>
+    <p>Un contenu illicite se signale à <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>, avec l’adresse de la page et le motif.</p>
+    <h2>Droit applicable</h2>
+    <p>Droit français. À défaut d’accord amiable, les juridictions compétentes de {LEGAL.jurisdiction}. Mise à jour : {LAST_UPDATED}.</p>
+  </div>
+</PageLayout>
