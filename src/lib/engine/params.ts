@@ -6,3 +6,8 @@ export type Params = typeof raw;
 export type SourceKey = keyof typeof raw.sources;
 export const YEAR_PARAMS = raw.year;
 export const TARIF = tarif;
+/** Adresse d'une source dans la langue de la page (champ `urls` facultatif), sinon l'adresse unique. */
+export const sourceUrl = (key: SourceKey, lang: 'fr' | 'nl' | 'en'): string => {
+  const s = raw.sources[key] as { url: string; urls?: Partial<Record<'fr' | 'nl' | 'en', string>> };
+  return s.urls?.[lang] ?? s.url;
+};

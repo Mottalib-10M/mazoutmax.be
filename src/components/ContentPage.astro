@@ -14,7 +14,7 @@ import { label } from '../i18n/nav';
 import { t } from '../i18n/ui';
 import { pageById } from '../lib/guides';
 import { helpers, REF_DAY } from '../lib/helpers';
-import { P } from '../lib/engine/params';
+import { P, sourceUrl } from '../lib/engine/params';
 import { articleSchema, faqSchema, breadcrumbSchema, webPageSchema, webApplicationSchema } from '../lib/seo';
 import { AUTHOR_NAME } from '../data/site-config';
 import type { PageDef } from '../lib/guide-types';
@@ -31,7 +31,7 @@ const jsonLd = [articleSchema({ title: x.h1, description: x.description, path, l
 if (page.tool) jsonLd.push(webApplicationSchema({ name: x.h1, description: x.description, path, lang }));
 if (faqs.length) jsonLd.push(faqSchema(faqs, lang));
 const related = page.related.filter((id) => ROUTES.some((r) => r.id === id)).map((id) => ({ href: route(id, lang), name: label(id, lang), description: pageById(id)?.[lang].card ?? '' }));
-const sources = page.sources.map((k) => ({ name: P.sources[k].label[lang], url: P.sources[k].url }));
+const sources = page.sources.map((k) => ({ name: P.sources[k].label[lang], url: sourceUrl(k, lang) }));
 const methodHref = route('method', lang);
 /** Outil de référence de chaque groupe : cible par défaut du bouton des mini-simulateurs. */
 const OUTIL: Record<string, string> = { mazout: 'mazout-demain', carburants: 'prix-carburant', comprendre: 'mazout-demain' };

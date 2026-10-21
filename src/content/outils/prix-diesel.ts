@@ -82,9 +82,9 @@ const faqs = (h: Helpers) => {
     {
       q: h.T('Que faire si une station affiche un diesel au-dessus du maximum ?', 'Wat als een tankstation diesel boven de maximumprijs aanrekent?', 'What if a station charges more than the maximum for diesel?'),
       a: h.T(
-        'Vérifiez d’abord la date : le maximum qui s’applique est celui du jour de votre plein, pas celui de la veille. Si le prix affiché dépasse bien le plafond de ce jour-là, la vente est interdite par le système des prix maximums. Gardez le ticket, notez l’adresse et l’heure, puis signalez-le au SPF Économie, qui contrôle le respect des prix réglementés.',
-        'Controleer eerst de datum: de maximumprijs die telt, is die van de dag van uw tankbeurt, niet die van de dag ervoor. Ligt de prijs echt boven het plafond van die dag, dan is de verkoop verboden door het systeem van maximumprijzen. Bewaar het ticket, noteer adres en uur en meld het aan de FOD Economie, die toeziet op de gereglementeerde prijzen.',
-        'Check the date first: the maximum that applies is the one for the day you filled up, not the day before. If the displayed price really is above that day’s ceiling, the sale breaches the maximum price system. Keep the receipt, note the address and time, and report it to the FPS Economy, which enforces regulated prices.'),
+        'Vérifiez d’abord la date : le maximum qui s’applique est celui du jour de votre plein, pas celui de la veille. Si le prix affiché dépasse bien le plafond de ce jour-là, la vente est interdite par le système des prix maximums. Gardez le ticket, notez l’adresse et l’heure : ConsumerConnect, le service consommateurs du SPF Économie, rappelle que la loi interdit de dépasser les prix maximums et permet de signaler l’infraction à ses services d’inspection (consumerconnect.be, rubrique Énergie, produits pétroliers).',
+        'Controleer eerst de datum: de maximumprijs die telt, is die van de dag van uw tankbeurt, niet die van de dag ervoor. Ligt de prijs echt boven het plafond van die dag, dan is de verkoop verboden door het systeem van maximumprijzen. Bewaar het ticket en noteer adres en uur: ConsumerConnect, de consumentendienst van de FOD Economie, herinnert eraan dat de wet hogere prijzen dan de maximumprijzen verbiedt, en laat u de inbreuk melden aan de inspectiediensten (consumerconnect.be, thema Energie, aardolieproducten).',
+        'Check the date first: the maximum that applies is the one for the day you filled up, not the day before. If the displayed price really is above that day’s ceiling, the sale breaches the maximum price system. Keep the receipt and note the address and time: ConsumerConnect, the FPS Economy’s consumer service, states that the law prohibits prices above the set maximums and lets you report the infringement to its inspection services (consumerconnect.be, Energy theme, petroleum products).'),
     },
   ];
 };
@@ -155,7 +155,7 @@ export default defineGuide({
   tool: 'produit',
   toolArg: 'diesel',
   related: ['diesel-demain', 'prix-carburant', 'prix-essence', 'budget-carburant', 'historique-carburants'],
-  sources: ['bestatJour', 'bestatDernier', 'spfTarif', 'chambreContrat', 'fondsPrix'],
+  sources: ['bestatJour', 'bestatDernier', 'spfTarif', 'chambreContrat', 'fondsPrix', 'ccPrixMax'],
   fr: {
     slug: 'prix-diesel',
     nav: 'Prix du diesel',

@@ -12,7 +12,7 @@ import { HOME } from '../content/accueil';
 import { route, type Locale } from '../i18n/routes';
 import { label } from '../i18n/nav';
 import { helpers, REF_DAY } from '../lib/helpers';
-import { P } from '../lib/engine/params';
+import { P, sourceUrl } from '../lib/engine/params';
 import type { SourceKey } from '../lib/engine/params';
 import { AUTHOR_NAME } from '../data/site-config';
 import { faqSchema, organizationSchema, websiteSchema, webPageSchema, webApplicationSchema } from '../lib/seo';
@@ -25,7 +25,7 @@ const parts = x.body(H).split(/<!--(mini:[A-Za-z0-9_]+|tarif:[A-Za-z0-9_]+)-->/)
 const resume = x.resume(H);
 const faqs = x.faqs(H);
 const keys: SourceKey[] = ['bestatJour', 'bestatDernier', 'bestatMois', 'bestatAn', 'statbelLicence', 'chambreContrat', 'fondsPrix', 'fondsMontant'];
-const sources = keys.map((k) => ({ name: P.sources[k].label[lang], url: P.sources[k].url }));
+const sources = keys.map((k) => ({ name: P.sources[k].label[lang], url: sourceUrl(k, lang) }));
 const jsonLd = [websiteSchema(lang), organizationSchema(lang), webPageSchema({ name: x.h1, description: x.description, path, lang }), webApplicationSchema({ name: x.h1, description: x.description, path, lang }), faqSchema(faqs, lang)];
 const by = H.T('Par', 'Door', 'By');
 ---

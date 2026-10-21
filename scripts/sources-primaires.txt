@@ -15,3 +15,5 @@ fondschauffage.be
 
 # Sociaal Verwarmingsfonds, version néerlandophone du même organisme.
 verwarmingsfonds.be
+# ConsumerConnect, service consommateurs du SPF Économie (prix maximums : interdiction légale, signalement)
+consumerconnect.be
