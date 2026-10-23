@@ -3,4 +3,4 @@ Allow: /
 
 Disallow: /*?*
 
-Sitemap: https://be-mazout-carburants.example/sitemap-index.xml
+Sitemap: https://mazoutmax.be/sitemap-index.xml

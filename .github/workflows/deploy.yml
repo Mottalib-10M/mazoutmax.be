@@ -76,4 +76,4 @@ jobs:
         uses: actions/checkout@v4
       - name: Ping IndexNow
         continue-on-error: true
-        run: bash scripts/indexnow.sh https://be-mazout-carburants.example
+        run: bash scripts/indexnow.sh https://mazoutmax.be

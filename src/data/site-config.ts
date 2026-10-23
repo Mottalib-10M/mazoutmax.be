@@ -1,5 +1,5 @@
 /** Configuration centrale du site (générée par new-site.py). */
-export const SITE_URL = "https://be-mazout-carburants.example";
+export const SITE_URL = "https://mazoutmax.be";
 export const SITE_NAMES: Record<string, string> = {"fr": "MazoutMax", "nl": "MazoutMax", "en": "MazoutMax"};
 export const LANG_TAGS: Record<string, string> = {"fr": "fr-BE", "nl": "nl-BE", "en": "en-BE"};
 export const OG_LOCALES: Record<string, string> = {"fr": "fr_BE", "nl": "nl_BE", "en": "en_GB"};
@@ -20,7 +20,7 @@ export const AUTHOR_DESC: Record<string, string> = {"fr": "Radif Partners relit 
  *  themes reellement traites par le site, pas une liste de mots-cles : un sujet
  *  declare ici sans page qui le couvre est une declaration fausse. */
 export const KNOWS_ABOUT: Record<string, string[]> = {"fr": ["Prix maximum officiel du gasoil de chauffage", "Contrat-programme des produits pétroliers", "Prix du diesel B7 et de l'essence E10 en Belgique", "Allocation du Fonds Social Chauffage", "Budget de chauffage au mazout"], "nl": ["Officiële maximumprijs van huisbrandolie", "Programmaovereenkomst voor aardolieproducten", "Prijs van diesel B7 en benzine E10 in België", "Toelage van het Sociaal Verwarmingsfonds", "Stookbudget met mazout"], "en": ["Official maximum price of Belgian heating oil", "Belgian programme contract for petroleum products", "Diesel B7 and E10 petrol prices in Belgium", "Social Heating Fund allowance", "Heating-oil budgeting"]};
-export const CONTACT_EMAIL = "contact@be-mazout-carburants.example";
+export const CONTACT_EMAIL = "contact@mazoutmax.be";
 export const THEME_COLOR = '#A3141F';
 export const LOGO_SYMBOL = 'L';
 export const BING_VERIFY_CODE = '';
