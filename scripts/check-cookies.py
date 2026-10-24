@@ -316,13 +316,18 @@ def main():
                     erreurs.append(f'{rel} : Clarity est chargé mais la page ne le nomme pas')
         for kind in ('cookies', 'privacy', 'legal'):
             for rel, html in lp[kind]:
-                for p in phrases(texte(html)):
+                tx = texte(html)
+                # Phrase entiere (coupee aux seuls . ! ?) : « Clarity en mode sans cookie : aucun cookie, ... »
+                # reste une phrase sur Clarity meme si phrases() la coupe aux deux-points.
+                entieres = [q for q in re.split(r'(?<=[.!?])\s+', tx) if q.strip()]
+                for p in phrases(tx):
+                    contexte = next((q for q in entieres if p in q), p)
                     if ga4_pages:
                         # GA4 dépose des cookies : plus de « aucun cookie » ni de « aucune mesure d'audience ».
                         if (m := SANS_AUDIENCE.search(p)):
                             erreurs.append(f'{rel} : GA4 est servi, la page dit « {m.group(0)} » : « {p[:140]} »')
-                        elif COOKIE_MOT.search(p) and NEGATION.search(p) and not CONTEXTE_SANS_COOKIE.search(p) \
-                                and not re.search(r'google|_ga\b|bloqu|block|supprim|delet|lösch|verwijder|elimin|borr|publicit|advertis|werbe|anuncio|advertentie|social|réseau|netzwerk', p, re.I):
+                        elif COOKIE_MOT.search(p) and NEGATION.search(p) and not CONTEXTE_SANS_COOKIE.search(contexte) \
+                                and not re.search(r'google|_ga\b|bloqu|block|supprim|delet|lösch|verwijder|elimin|borr|publicit|pubblicit|reklam|advertis|werbe|anuncio|advertentie|social|społeczno|réseau|netzwerk', p, re.I):
                             erreurs.append(f'{rel} : GA4 est servi, la page dit qu\'aucun cookie n\'est déposé : « {p[:140]} »')
                     if NEGATION.search(p):
                         continue
