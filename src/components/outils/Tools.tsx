@@ -129,7 +129,14 @@ export function LivraisonCalc({ lang = 'fr', refDay, methodHref, id = 'livraison
         [T(lang, 'Prix appliqué', 'Toegepaste prijs', 'Price applied'), pL(c.prix, lang)],
         [T(lang, 'Dont TVA (21 %)', 'Waarvan btw (21 %)', 'Of which VAT (21%)'), eur(c.tva, lang)],
         [T(lang, 'Écart demain − aujourd’hui', 'Verschil morgen − vandaag', 'Tomorrow minus today'), sgEur(dem.total - auj.total, lang)],
-        ...(litres > 0 && litres < P.seuil_litres ? [[T(lang, 'Le même montant achèterait', 'Hetzelfde bedrag koopt', 'The same amount would buy'), `${n0(c.total / pGe, lang)} L ${T(lang, 'au palier de 2 000 L', 'in de schijf vanaf 2.000 l', 'in the 2,000 L band')}`] as [string, string]] : []),
+        // Sous le seuil : ce que coûteraient 2 000 L. Moins cher que la commande (1 999 L : 3 298 € contre
+        // 3 214 € pour 2 000 L), on le dit ; sinon, le supplément (audit de Sami du 2026-10-28).
+        ...(litres > 0 && litres < P.seuil_litres ? (() => {
+          const d2000 = M.livraison(P.seuil_litres, pLt, pGe).total - c.total;
+          return [d2000 <= 0
+            ? [T(lang, 'Commandez 2 000 L', 'Bestel 2.000 l', 'Order 2,000 L'), T(lang, `vous payez ${eur(-d2000, lang)} de moins`, `u betaalt ${eur(-d2000, lang)} minder`, `you pay ${eur(-d2000, lang)} less`)]
+            : [T(lang, '2 000 L coûteraient', '2.000 l zou kosten', '2,000 L would cost'), T(lang, `${eur(d2000, lang)} de plus`, `${eur(d2000, lang)} meer`, `${eur(d2000, lang)} more`)]] as [string, string][];
+        })() : []),
       ]} />
       <Note>{T(lang, 'Le négociant peut vendre moins cher, jamais plus cher que ce prix maximum.', 'De handelaar mag goedkoper verkopen, nooit duurder dan deze maximumprijs.', 'A dealer may sell for less, never for more than this maximum price.')}</Note>
       <MethodLink href={methodHref} lang={lang} />

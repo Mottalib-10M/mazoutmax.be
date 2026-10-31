@@ -50,7 +50,7 @@ const body = (h: Helpers) => {
   const recul = (k: Prod, n: number) => M.priceNear(k, M.addDays(d, -n));
   const prods: Prod[] = ['mazout_lt2000', 'mazout_ge2000', 'mazout_pompe', 'diesel_b7', 'e10_95', 'lpg'];
   const tabEvo = h.table(
-    [T('Produit', 'Product', 'Product'), h.date(d), T('il y a 7 jours', '7 dagen eerder', '7 days earlier'), T('il y a 30 jours', '30 dagen eerder', '30 days earlier'), T('il y a un an', 'een jaar eerder', 'a year earlier')],
+    [T('Produit', 'Product', 'Product'), h.date(d), T('il y a 7 jours', '7 dagen eerder', '7 days earlier'), T('il y a 30 jours', '30 dagen eerder', '30 days earlier'), `${T('il y a un an', 'een jaar eerder', 'a year earlier')} (${h.date(M.dayNear('mazout_lt2000', M.addDays(d, -364)))})`],
     prods.map((k) => [M.NOM[k][h.lang], h.l3(p(k)), ...[7, 30, 364].map((n) => { const v = recul(k, n); return v == null ? '–' : h.l3(v); })]),
     T('Prix maximums TVA comprise, en euros par litre (be.STAT, Statbel).', 'Maximumprijzen incl. btw, in euro per liter (be.STAT, Statbel).', 'Maximum prices including VAT, in euros per litre (be.STAT, Statbel).'),
     ['l', 'r', 'r', 'r', 'r']);

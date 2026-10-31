@@ -102,8 +102,14 @@ export function situation(k: Prod, today: string): Situation {
 /** Prix d'un jour passé ; si ce jour précède de 3 jours au plus le début de la fenêtre de 365 jours,
  *  le premier jour de la série (« il y a un an » vu depuis la veille du dernier jour publié). */
 export function priceNear(k: Prod, day: string): number | null {
+  return priceOn(k, dayNear(k, day));
+}
+/** Jour réellement lu par priceNear : le premier jour de la série quand le jour demandé le précède de peu.
+ *  Sert à dater la colonne « il y a un an » (audit de Sami du 2026-10-28 : elle lisait le 30/10/2025
+ *  sans le dire, pour un dernier jour au 28/10/2026). */
+export function dayNear(k: Prod, day: string): string {
   const s0 = series(k)[0][0];
-  return priceOn(k, day < s0 && Date.parse(s0) - Date.parse(day) <= 3 * 864e5 ? s0 : day);
+  return day < s0 && Date.parse(s0) - Date.parse(day) <= 3 * 864e5 ? s0 : day;
 }
 
 /** Variation sur n jours (prix du dernier jour publié moins prix n jours plus tôt). */
