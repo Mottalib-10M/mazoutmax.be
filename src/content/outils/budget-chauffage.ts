@@ -34,7 +34,7 @@ export default defineGuide({
     title: 'Budget chauffage mazout : coût annuel au prix maximum 2026',
     description: 'Budget de chauffage au mazout : coût d’une année au prix maximum du jour, par mois, au plus bas et au plus haut d’un an et aux moyennes officielles, 2026.',
     h1: 'Budget de chauffage au mazout',
-    intro: 'Vos litres brûlés par an, chiffrés au prix maximum du jour, puis aux extrêmes de l’année et aux moyennes officielles des trois dernières années.',
+    intro: 'Le budget de vos litres de mazout brûlés par an, chiffré au prix maximum du jour, puis aux extrêmes de l’année et aux moyennes officielles des trois dernières années.',
     resume: (h) => {
       const { b2, r2, pr, tva2, ans } = base(h);
       const a = ans[ans.length - 2];
@@ -55,7 +55,7 @@ export default defineGuide({
 <h2>Ce que fait l’outil</h2>
 <p>Vous indiquez les litres brûlés sur une année. L’outil choisit le palier du tarif officiel qui correspond à ce volume, moins de 2 000 litres ou 2 000 litres et plus, prend le prix maximum du jour dans la ${h.src('bestatJour', 'série be.STAT')} et multiplie. Le résultat est un plafond : ce que coûterait l’année si tout était acheté aujourd’hui au prix maximum. Il le divise par douze pour donner un budget mensuel, puis refait le calcul au prix le plus bas et au plus haut des 365 derniers jours, et aux moyennes annuelles officielles des dernières années publiées par Statbel dans ses ${h.src('bestatAn', 'tableaux annuels')}.</p>
 <p>Le second champ, facultatif, reçoit le prix au litre de votre dernière facture, TVA comprise. Une ligne supplémentaire montre alors ce que l’année vous coûterait à ce prix-là, ce qui permet de voir d’un coup d’œil si votre négociant se situait loin sous le plafond ou tout près.</p>
-<h2>Le budget selon le volume, au prix du jour et aux extrêmes</h2>
+<h2>Le budget chauffage selon le volume, au prix du jour et aux extrêmes</h2>
 ${h.table(['Litres par an', 'Au prix du jour', 'Par mois', 'Au plus bas d’un an', 'Au plus haut d’un an'], lignes(h), `Budgets maximums TVA comprise, au palier qui correspond au volume, prix du ${h.date(h.today)} et extrêmes des 365 derniers jours.`, ['l', 'r', 'r', 'r', 'r'])}
 <p>Le saut entre 1 500 et 2 000 litres n’est pas proportionnel : à partir de 2 000 litres, tout le volume passe au palier moins cher. Une consommation annuelle juste sous le seuil gagne donc à être livrée en une fois si la citerne le permet, comme le détaille le ${h.a('mazout-2000-litres', 'calcul du seuil de 2 000 litres')}.</p>
 <h2>Lisser la dépense sur l’année</h2>
@@ -73,7 +73,7 @@ ${h.table(['Litres par an', 'Au prix du jour', 'Par mois', 'Au plus bas d’un a
     title: 'Stookbudget mazout: jaarkost tegen de maximumprijs 2026',
     description: 'Stookbudget voor mazout: wat een jaar kost tegen de maximumprijs van vandaag, per maand, tegen de laagste en hoogste prijs en de jaargemiddelden, 2026.',
     h1: 'Stookbudget voor mazout',
-    intro: 'Uw verbruikte liters per jaar, berekend tegen de maximumprijs van vandaag, dan tegen de uitersten van het jaar en de officiële gemiddelden van de laatste drie jaar.',
+    intro: 'Uw verbruikte liters mazout per jaar, berekend tegen de maximumprijs van vandaag, dan tegen de uitersten van het jaar en de officiële gemiddelden van de laatste drie jaar.',
     resume: (h) => {
       const { b2, r2, pr, tva2, ans } = base(h);
       const a = ans[ans.length - 2];
@@ -94,7 +94,7 @@ ${h.table(['Litres par an', 'Au prix du jour', 'Par mois', 'Au plus bas d’un a
 <h2>Wat de tool doet</h2>
 <p>U vult de liters in die u over een jaar verbruikt. De tool kiest de schijf van het officiële tarief die bij dat volume hoort, minder dan 2.000 liter of 2.000 liter en meer, neemt de maximumprijs van vandaag uit de ${h.src('bestatJour', 'be.STAT-reeks')} en vermenigvuldigt. Het resultaat is een plafond: wat het jaar zou kosten als alles vandaag tegen de maximumprijs werd gekocht. Hij deelt het door twaalf voor een maandbudget en herhaalt de berekening tegen de laagste en de hoogste prijs van de laatste 365 dagen en tegen de officiële jaargemiddelden die Statbel in zijn ${h.src('bestatAn', 'jaartabellen')} publiceert.</p>
 <p>Het tweede, optionele veld krijgt de literprijs van uw laatste factuur, inclusief btw. Een extra regel toont dan wat het jaar u tegen die prijs zou kosten, zodat u in één oogopslag ziet of uw handelaar ver onder het plafond zat of er vlak tegenaan.</p>
-<h2>Het budget per volume, tegen de dagprijs en de uitersten</h2>
+<h2>Het stookbudget per volume, tegen de dagprijs en de uitersten</h2>
 ${h.table(['Liter per jaar', 'Tegen de dagprijs', 'Per maand', 'Laagste van een jaar', 'Hoogste van een jaar'], lignes(h), `Maximumbudgetten incl. btw, in de schijf die bij het volume hoort, prijs van ${h.date(h.today)} en uitersten van de laatste 365 dagen.`, ['l', 'r', 'r', 'r', 'r'])}
 <p>De sprong tussen 1.500 en 2.000 liter is niet evenredig: vanaf 2.000 liter valt het hele volume in de goedkopere schijf. Een jaarverbruik net onder de drempel laat u dus beter in één keer leveren als de tank het toelaat, zoals de ${h.a('mazout-2000-litres', 'berekening van de drempel van 2.000 liter')} toont.</p>
 <h2>De uitgave over het jaar spreiden</h2>
@@ -112,7 +112,7 @@ ${h.table(['Liter per jaar', 'Tegen de dagprijs', 'Per maand', 'Laagste van een 
     title: 'Heating oil budget: yearly cost at the maximum price 2026',
     description: 'Heating oil budget for a Belgian home: a year’s cost at today’s maximum price, per month, at the year’s low and high and at official yearly averages, 2026.',
     h1: 'Heating oil budget',
-    intro: 'The litres you burn in a year, priced at today’s maximum price, then at the year’s extremes and at the official averages of the last three years.',
+    intro: 'The litres of heating oil you burn in a year, priced at today’s maximum price, then at the year’s extremes and at the official averages of the last three years.',
     resume: (h) => {
       const { b2, r2, pr, tva2, ans } = base(h);
       const a = ans[ans.length - 2];
@@ -133,7 +133,7 @@ ${h.table(['Liter per jaar', 'Tegen de dagprijs', 'Per maand', 'Laagste van een 
 <h2>What the tool does</h2>
 <p>You enter the litres burnt over a year. The tool picks the band of the official tariff that matches that volume, under 2,000 litres or 2,000 litres and over, takes the day’s maximum price from the ${h.src('bestatJour', 'be.STAT series')} and multiplies. The result is a ceiling: what the year would cost if everything were bought today at the maximum price. It divides by twelve for a monthly budget, then repeats the calculation at the lowest and highest prices of the last 365 days and at the official yearly averages Statbel publishes in its ${h.src('bestatAn', 'yearly tables')}.</p>
 <p>The second, optional field takes the price per litre on your last invoice, VAT included. An extra line then shows what the year would cost at that price, so you can see at a glance whether your dealer was well under the ceiling or close to it.</p>
-<h2>The budget by volume, at today’s price and at the extremes</h2>
+<h2>The heating oil budget by volume, at today’s price and at the extremes</h2>
 ${h.table(['Litres a year', 'At today’s price', 'A month', 'At the year’s low', 'At the year’s high'], lignes(h), `Maximum budgets including VAT, in the band matching the volume, prices of ${h.date(h.today)} and extremes of the last 365 days.`, ['l', 'r', 'r', 'r', 'r'])}
 <p>The jump between 1,500 and 2,000 litres is not proportional: from 2,000 litres, the whole volume moves to the cheaper band. A yearly consumption just under the threshold is therefore better delivered in one go if the tank allows, as the ${h.a('mazout-2000-litres', '2,000-litre threshold calculation')} sets out.</p>
 <h2>Spreading the cost over the year</h2>

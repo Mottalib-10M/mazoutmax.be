@@ -46,7 +46,7 @@ export default defineGuide({
     title: 'Contrat-programme pétrole 2026 : quand le prix change',
     description: 'Contrat-programme des prix pétroliers : qui l’a signé, les jours où le prix maximum du mazout change et la précision mesurée de l’estimation du lendemain.',
     h1: 'Le contrat-programme : comment le prix maximum change',
-    intro: 'Le calendrier réel des nouveaux tarifs, compté sur un an, et ce qu’il permet de dire du lendemain.',
+    intro: 'Le calendrier réel des nouveaux tarifs pétroliers fixés selon le contrat-programme, compté sur un an, et ce qu’il permet de dire du lendemain.',
     resume: (h) => {
       const d = D(h);
       return `Le prix maximum des produits pétroliers belges est fixé par le SPF Économie selon le contrat-programme conclu entre l’État belge et Energia, la fédération du secteur pétrolier. Son annexe technique, datée du 9 octobre 2006, fait suivre au prix les cotations internationales des produits pétroliers ; ces cotations sont payantes et ne sont pas publiées, si bien que personne ne peut recalculer à l’avance le prix officiel du lendemain. Sur les ${h.num(d.all.days)} derniers jours de la série be.STAT, le prix maximum du mazout livré en moins de 2 000 litres a changé ${h.num(d.all.changed)} fois, ${h.num(d.all.up)} hausses et ${h.num(d.all.down)} baisses ; c’est le ${nomL(h, d.top.wd)} qu’un nouveau tarif tombe le plus souvent (${h.pct(d.top.m.prob, 0)} des ${nomL(h, d.top.wd)}s). Le diesel B7 n’a changé que ${h.num(d.dsl.changed)} fois. Tant que le tarif de demain n’est pas publié, ce site affiche une estimation : le dernier prix publié, avec la fourchette observée le même jour de la semaine. Sur 52 semaines, elle s’est écartée du tarif réel de ${h.cts(d.bt52.mae).replace(/^[+−]/, '')} par litre en moyenne.`;
@@ -68,7 +68,7 @@ export default defineGuide({
       const e = d.est;
       const diffMaz = d.c27.mazout_lt2000 - d.c28.mazout_lt2000;
       return `
-<h2>Un accord entre l’État et le secteur pétrolier</h2>
+<h2>Le contrat-programme, un accord entre l’État et le secteur pétrolier</h2>
 <p>Le prix maximum n’est pas décidé au jour le jour par un ministre. Il découle d’un contrat-programme, un accord conclu entre l’État belge et Energia, la fédération du secteur pétrolier, que le SPF Économie applique en publiant le ${h.src('spfTarif', 'tarif officiel')}. Le ${h.src('fondsPrix', 'Fonds Social Chauffage')} rappelle les deux conséquences pour le client : le tarif fixe un plafond par produit, et vendre au-dessus est interdit.</p>
 <p>La méthode de calcul est décrite dans une annexe technique datée du 9 octobre 2006. Elle fait suivre au prix maximum les cotations internationales des produits pétroliers. Ces cotations sont payantes et ne sont pas publiées : le grand public, les journalistes et ce site voient le résultat, le tarif, mais pas les chiffres d’entrée. C’est la raison pour laquelle personne ne peut recalculer à l’avance le prix officiel du lendemain.</p>
 <h2>Ce que montre la proposition de loi de mars 2026</h2>
@@ -99,7 +99,7 @@ ${tableJours(h, d, ['Jour', 'Mazout : nouveaux tarifs', 'Mazout : part des jours
     title: 'Programmaovereenkomst aardolie 2026: wanneer prijs wijzigt',
     description: 'Programmaovereenkomst voor aardolieprijzen: wie ze tekende, op welke dagen de maximumprijs van mazout wijzigt en hoe juist de schatting van morgen is.',
     h1: 'De programmaovereenkomst: hoe de maximumprijs verandert',
-    intro: 'De werkelijke kalender van de nieuwe tarieven, geteld over een jaar, en wat die over morgen zegt.',
+    intro: 'De werkelijke kalender van de nieuwe tarieven onder de programmaovereenkomst, geteld over een jaar, en wat die over morgen zegt.',
     resume: (h) => {
       const d = D(h);
       return `De maximumprijs van de Belgische aardolieproducten wordt door de FOD Economie vastgelegd volgens de programmaovereenkomst tussen de Belgische Staat en Energia, de federatie van de aardoliesector. De technische bijlage, gedateerd op 9 oktober 2006, laat de prijs de internationale noteringen van aardolieproducten volgen; die noteringen zijn betalend en worden niet gepubliceerd, zodat niemand de officiële prijs van morgen vooraf kan narekenen. Over de laatste ${h.num(d.all.days)} dagen van de be.STAT-reeks veranderde de maximumprijs van mazout bij levering van minder dan 2.000 liter ${h.num(d.all.changed)} keer, ${h.num(d.all.up)} stijgingen en ${h.num(d.all.down)} dalingen; op ${nomL(h, d.top.wd)} valt het vaakst een nieuw tarief (${h.pct(d.top.m.prob, 0)} van de ${nomL(h, d.top.wd)}en). Diesel B7 wijzigde maar ${h.num(d.dsl.changed)} keer. Zolang het tarief van morgen niet gepubliceerd is, toont deze site een schatting: de laatst gepubliceerde prijs, met de vork die op dezelfde weekdag werd waargenomen. Over 52 weken week die gemiddeld ${h.cts(d.bt52.mae).replace(/^[+−]/, '')} per liter af van het echte tarief.`;
@@ -152,7 +152,7 @@ ${tableJours(h, d, ['Dag', 'Mazout: nieuwe tarieven', 'Mazout: aandeel dagen', '
     title: 'Programme contract fuel prices 2026: when prices change',
     description: 'Belgium’s programme contract on oil prices: who signed it, on which days the heating oil maximum price changes, and how accurate the estimate of tomorrow is.',
     h1: 'The programme contract: how the maximum price changes',
-    intro: 'The real calendar of new tariffs, counted over a year, and what it allows us to say about tomorrow.',
+    intro: 'The real calendar of new fuel prices under the programme contract, counted over a year, and what it allows us to say about tomorrow.',
     resume: (h) => {
       const d = D(h);
       return `Maximum prices for petroleum products in Belgium are set by the FPS Economy under the programme contract between the Belgian State and Energia, the petroleum sector federation. Its technical annex, dated 9 October 2006, makes the price follow international quotations for petroleum products; those quotations are paid for and not published, so nobody can recompute tomorrow’s official price in advance. Over the last ${h.num(d.all.days)} days of the be.STAT series, the maximum price of heating oil delivered in orders under 2,000 litres changed ${h.num(d.all.changed)} times, ${h.num(d.all.up)} rises and ${h.num(d.all.down)} falls; a new tariff most often lands on a ${nomL(h, d.top.wd)} (${h.pct(d.top.m.prob, 0)} of ${nomL(h, d.top.wd)}s). Diesel B7 changed only ${h.num(d.dsl.changed)} times. Until tomorrow’s tariff is published, this site shows an estimate: the last published price, framed by the range seen on the same weekday. Over 52 weeks it was off the actual tariff by ${h.cts(d.bt52.mae).replace(/^[+−]/, '')} a litre on average.`;
@@ -181,7 +181,7 @@ ${tableJours(h, d, ['Dag', 'Mazout: nieuwe tarieven', 'Mazout: aandeel dagen', '
 <p>In spring 2026 a bill on the programme contract was tabled in the Chamber of Representatives. ${h.src('chambreContrat', 'Bill DOC 56 1452/001 of 30 March 2026')} quotes the official tariffs for two dates, 28 February and 27 March 2026, to show how quickly the maximum price tracks the markets.</p>
 ${tableContrat(h, d, ['Product', '28 February 2026', '27 March 2026', 'Change per litre'], 'Maximum prices including VAT as quoted in bill DOC 56 1452/001 (heating oil to four decimals, as in the document).')}
 <p>Within a month, the cap on heating oil delivered under 2,000 litres ${diffMaz > 0 ? 'rose' : diffMaz < 0 ? 'fell' : 'did not move'}${diffMaz === 0 ? '' : ` by ${h.cts(Math.abs(diffMaz)).replace(/^[+−]/, '')} a litre, or ${h.pct(Math.abs(diffMaz) / d.c28.mazout_lt2000, 0)}`}. On a 1,500-litre tank, the gap between those two dates comes to ${h.eur(Math.abs(diffMaz) * 1500)}.</p>
-<h2>How often the maximum price changes</h2>
+<h2>How often fuel prices change under the programme contract</h2>
 <p>The series Statbel publishes on ${h.src('bestatJour', 'be.STAT')} makes it possible to count new tariffs day by day. The table sorts the last ${h.num(d.all.days)} days by the weekday on which a new price came into force, for heating oil under 2,000 litres and, for comparison, diesel B7.</p>
 ${tableJours(h, d, ['Day', 'Heating oil: new tariffs', 'Heating oil: share of days', 'Diesel B7: new tariffs'], `Days on which the maximum price changed from the day before, over the last ${h.num(d.all.days)} days of the be.STAT series.`)}
 <p>For heating oil, the busiest day is ${nomL(h, d.top.wd)}: ${h.num(d.top.m.changed)} out of ${h.num(d.top.m.days)} ${nomL(h, d.top.wd)}s brought a new tariff. ${d.calmes.length

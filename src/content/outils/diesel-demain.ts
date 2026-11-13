@@ -104,7 +104,7 @@ const body = (h: Helpers) => {
   return h.T(`
 <h2>Tarif officiel ou estimation : ce que dit la carte « demain »</h2>
 <p>${statut} Le tarif publié la veille est un fait : il s’applique toute la journée suivante dans toutes les stations du pays, qui peuvent vendre en dessous mais pas au-dessus. L’estimation, elle, n’est qu’un repère. Le contrat-programme, dont l’annexe technique date du 9 octobre 2006, fait dépendre le prix maximum de cotations internationales du gazole que le site ne peut pas lire. Plutôt que d’inventer une cotation, l’estimation reprend le dernier tarif publié et l’entoure des variations réellement observées le même jour de la semaine.</p>
-<h2>Le rythme du diesel, jour par jour</h2>
+<h2>Le rythme du prix du diesel, jour par jour</h2>
 <p>Les changements de prix du diesel ne tombent pas au hasard dans la semaine. Le tableau compte, pour chaque jour, combien de fois un nouveau prix maximum a pris effet ce jour-là au cours des 365 derniers jours, et dans quel sens.</p>
 ${tbl}
 <p>Sur l’ensemble de l’année, le diesel a connu ${h.num(d.st.up)} hausses et ${h.num(d.st.down)} baisses. Un jour donné, la probabilité d’un nouveau tarif reste donc ${d.st.prob < 0.5 ? 'minoritaire' : 'élevée'} : ${h.pct(d.st.prob, 0)} des jours en moyenne. C’est ce qui explique qu’un estimateur aussi simple que « demain comme aujourd’hui » se trompe peu la plupart du temps, et beaucoup les rares jours où le prix saute.</p>
@@ -126,7 +126,7 @@ ${tbl}
   `
 <h2>Official tariff or estimate: what the “tomorrow” card says</h2>
 <p>${statut} A tariff published the day before is a fact: it applies all of the next day in every station in the country, which may sell below it but not above. The estimate is only a guide. The programme agreement, whose technical annex dates from 9 October 2006, ties the maximum price to international diesel quotations that this site cannot read. Rather than invent a quotation, the estimate takes the last published tariff and frames it with the moves actually seen on the same weekday.</p>
-<h2>Diesel’s rhythm, day by day</h2>
+<h2>The diesel price’s rhythm, day by day</h2>
 <p>Diesel price changes do not land at random in the week. The table counts, for each day, how many times a new maximum price took effect on that day over the last 365 days, and in which direction.</p>
 ${tbl}
 <p>Over the whole year diesel saw ${h.num(d.st.up)} rises and ${h.num(d.st.down)} cuts. On any given day the chance of a new tariff is therefore ${d.st.prob < 0.5 ? 'fairly low' : 'high'}: ${h.pct(d.st.prob, 0)} of days on average. That is why an estimator as simple as “tomorrow like today” is only slightly off most of the time, and well off on the rare days when the price jumps.</p>

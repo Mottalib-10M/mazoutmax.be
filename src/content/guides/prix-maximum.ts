@@ -25,7 +25,7 @@ export default defineGuide({
     title: 'Prix maximum du mazout 2026 : règle, TVA et facture',
     description: 'Prix maximum du mazout en Belgique : qui le fixe, ce que comprennent les trois prix du tarif, la TVA, le H0 et le H7, et comment contrôler votre devis en 2026.',
     h1: 'Le prix maximum du mazout, expliqué',
-    intro: 'Un plafond légal, publié pour chaque jour : ce qu’il couvre, ce qu’il ne dit pas, et comment s’en servir face à un devis.',
+    intro: 'Le prix maximum du mazout est un plafond légal, publié pour chaque jour : ce qu’il couvre, ce qu’il ne dit pas, et comment s’en servir face à un devis.',
     resume: (h) => {
       const d = D(h);
       return `Le prix maximum du mazout est le prix le plus élevé qu’un vendeur peut demander en Belgique pour un litre de gasoil de chauffage, TVA comprise. Le SPF Économie le fixe en application du contrat-programme conclu entre l’État belge et Energia, la fédération du secteur pétrolier, et vendre au-dessus est interdit. Le tarif officiel du ${h.date(h.today)} donne trois prix : ${h.l3(d.lt)} le litre livré en moins de 2 000 litres, ${h.l3(d.ge)} à partir de 2 000 litres et ${h.l3(d.po)} à la pompe. Le prix réellement payé peut être plus bas, jamais plus haut. Depuis le 1er avril 2024, l’ancien gasoil de chauffage 50S a disparu et le tarif vise le H0 et le H7. La TVA de ${h.pct(h.P.tva, 0)} est comprise dans le plafond : dans le dernier tarif publié, elle pèse ${h.l3(d.tvaL)} par litre. Sur les 365 derniers jours, le maximum sous 2 000 litres est allé de ${h.l3(d.r.min[1])} le ${h.date(d.r.min[0])} à ${h.l3(d.r.max[1])} le ${h.date(d.r.max[0])}.`;
@@ -82,7 +82,7 @@ ${h.table(['Ligne du tarif', `Prix maximum au ${h.date(h.today)}`, 'Écart avec 
     title: 'Maximumprijs mazout 2026: regels, btw en uw factuur',
     description: 'Maximumprijs van mazout in België: wie hem vastlegt, wat de drie prijzen van het tarief inhouden, de btw, H0 en H7, en hoe u uw offerte in 2026 controleert.',
     h1: 'De maximumprijs van mazout uitgelegd',
-    intro: 'Een wettelijk plafond, voor elke dag gepubliceerd: wat het dekt, wat het niet zegt en hoe u het naast een offerte legt.',
+    intro: 'De maximumprijs van mazout is een wettelijk plafond, voor elke dag gepubliceerd: wat het dekt, wat het niet zegt en hoe u het naast een offerte legt.',
     resume: (h) => {
       const d = D(h);
       return `De maximumprijs van mazout is de hoogste prijs die een verkoper in België mag vragen voor een liter gasolie voor verwarming, btw inbegrepen. De FOD Economie legt hem vast op grond van de programmaovereenkomst tussen de Belgische Staat en Energia, de federatie van de aardoliesector, en verkopen boven dat maximum is verboden. Het officiële tarief van ${h.date(h.today)} kent drie prijzen: ${h.l3(d.lt)} per liter bij levering van minder dan 2.000 liter, ${h.l3(d.ge)} vanaf 2.000 liter en ${h.l3(d.po)} aan de pomp. De prijs die u werkelijk betaalt, mag lager liggen, nooit hoger. Sinds 1 april 2024 bestaat de vroegere gasolie 50S niet meer; het tarief geldt voor H0 en H7. De btw van ${h.pct(h.P.tva, 0)} zit in het plafond: in het laatst gepubliceerde tarief is dat ${h.l3(d.tvaL)} per liter. Over de voorbije 365 dagen schommelde het maximum onder 2.000 liter tussen ${h.l3(d.r.min[1])} op ${h.date(d.r.min[0])} en ${h.l3(d.r.max[1])} op ${h.date(d.r.max[0])}.`;
@@ -139,7 +139,7 @@ ${h.table(['Regel van het tarief', `Maximumprijs op ${h.date(h.today)}`, 'Versch
     title: 'Maximum price of heating oil 2026: rules, VAT, invoice',
     description: 'Maximum price of heating oil in Belgium: who sets it, the three prices in the tariff, VAT, the H0 and H7 grades, and how to check a quote or an invoice in 2026.',
     h1: 'The maximum price of heating oil, explained',
-    intro: 'A legal cap, published for every day: what it covers, what it leaves out and how to hold it against a quote.',
+    intro: 'The maximum price of heating oil is a legal cap, published for every day: what it covers, what it leaves out and how to hold it against a quote.',
     resume: (h) => {
       const d = D(h);
       return `The maximum price of heating oil (mazout, as it is called in Belgium) is the highest price a seller may charge for a litre of heating gasoil, VAT included. The FPS Economy, Belgium’s federal economy ministry, sets it under the programme contract between the Belgian State and Energia, the petroleum sector federation, and selling above it is forbidden. The official tariff for ${h.date(h.today)} gives three prices: ${h.l3(d.lt)} a litre delivered in quantities under 2,000 litres, ${h.l3(d.ge)} from 2,000 litres and ${h.l3(d.po)} at the pump. What you actually pay may be lower, never higher. Since 1 April 2024 the former 50S heating gasoil has gone, and the tariff covers the H0 and H7 grades. The ${h.pct(h.P.tva, 0)} VAT is inside the cap: in the latest published tariff it accounts for ${h.l3(d.tvaL)} a litre. Over the last 365 days the maximum under 2,000 litres has ranged from ${h.l3(d.r.min[1])} on ${h.date(d.r.min[0])} to ${h.l3(d.r.max[1])} on ${h.date(d.r.max[0])}.`;

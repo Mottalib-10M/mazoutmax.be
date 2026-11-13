@@ -101,7 +101,7 @@ ${tAn}
 <h2>Wat 100 km vandaag kost</h2>
 ${t100}
 <p>Uit de tabel leest u meteen de kost van een rit af: een heen-en-terugrit van 40 km met een wagen die 6 liter per 100 km verbruikt, kost hoogstens ${h.eur(0.4 * 6 * d.pD, 2)} met diesel en ${h.eur(0.4 * 6 * d.pE, 2)} met benzine 95 E10. Voor LPG, waarvan het verbruik in liter hoger ligt, berekent de pagina ${h.a('prix-lpg', 'LPG-prijs')} vanaf welk verbruik het niet langer voordelig is.</p>
-<h2>Een jaar prijzen, een budget dat beweegt</h2>
+<h2>Een jaar prijzen, een brandstofbudget dat beweegt</h2>
 <p>Over de voorbije 365 dagen veranderde de maximumprijs van diesel ${h.num(M.changeStats('diesel_b7').changed)} keer en die van benzine 95 E10 ${h.num(M.changeStats('e10_95').changed)} keer. De prijs van vandaag toepassen op een heel jaar geeft een momentopname, geen voorspelling. De volgende tabel neemt het voorbeeld van ${h.num(KM)} km aan ${h.num(CONSO)} liter per 100 km met de uiterste en gemiddelde prijzen van de voorbije 365 dagen.</p>
 ${tAn}
 <p>Het verschil tussen de laagste en de hoogste regel toont hoe sterk een autobudget van het moment afhangt. De volledige curves staan op de pagina ${h.a('historique-carburants', 'evolutie van de brandstofprijzen')}.</p>
@@ -135,7 +135,7 @@ export default defineGuide({
     title: 'Budget carburant 2026 : coût annuel de votre voiture',
     description: 'Budget carburant de votre voiture en Belgique : coût annuel et mensuel au prix maximum officiel du jour, coût de 100 km et effet des prix extrêmes de l’année.',
     h1: 'Budget carburant de votre voiture',
-    intro: 'Ce que vos kilomètres de l’année coûtent au plus, au prix maximum officiel du jour, et ce qu’ils auraient coûté au plus bas et au plus haut de l’année.',
+    intro: 'Votre budget carburant de l’année : ce que vos kilomètres coûtent au plus, au prix maximum officiel du jour, et ce qu’ils auraient coûté au plus bas et au plus haut de l’année.',
     resume, faqs, body,
   },
   nl: {
@@ -145,7 +145,7 @@ export default defineGuide({
     title: 'Brandstofbudget 2026: wat kost tanken u per jaar in België?',
     description: 'Brandstofbudget van uw wagen in België: jaar- en maandkost tegen de officiële maximumprijs van vandaag, kost van 100 km en de laagste en hoogste prijs.',
     h1: 'Brandstofbudget van uw wagen',
-    intro: 'Wat uw kilometers van het jaar hoogstens kosten tegen de officiële maximumprijs van vandaag, en wat ze gekost hadden tegen de laagste en de hoogste prijs.',
+    intro: 'Uw brandstofbudget van het jaar: wat uw kilometers hoogstens kosten tegen de officiële maximumprijs van vandaag, en wat ze gekost hadden tegen de laagste en de hoogste prijs.',
     resume, faqs, body,
   },
   en: {
@@ -155,7 +155,7 @@ export default defineGuide({
     title: 'Fuel budget 2026: the yearly cost of running your car today',
     description: 'Fuel budget for your car in Belgium: yearly and monthly cost at today’s official maximum price, the cost of 100 km and the year’s lowest and highest prices.',
     h1: 'Your car’s fuel budget',
-    intro: 'What your year of driving costs at most at today’s official maximum price, and what it would have cost at the year’s lowest and highest prices.',
+    intro: 'The fuel budget for your year of driving: what it costs at most at today’s official maximum price, and what it would have cost at the year’s lowest and highest prices.',
     resume, faqs, body,
   },
 });

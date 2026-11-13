@@ -182,7 +182,7 @@ export default defineGuide({
     title: 'Brandstofprijzen 2026 in België: diesel, benzine en LPG',
     description: 'Brandstofprijzen in België vandaag en morgen: officiële maximumprijs van diesel, benzine 95 en 98 en LPG, en het verschil tussen twee soorten brandstof.',
     h1: 'Brandstofprijzen vandaag',
-    intro: 'De officiële maximumprijzen van alle wegbrandstoffen, vandaag en morgen, en het verschil tussen twee brandstoffen op uw tankbeurt.',
+    intro: 'De officiële brandstofprijzen van vandaag en morgen: de maximumprijzen van alle wegbrandstoffen, en het verschil tussen twee brandstoffen op uw tankbeurt.',
     resume, faqs, body,
   },
   en: {

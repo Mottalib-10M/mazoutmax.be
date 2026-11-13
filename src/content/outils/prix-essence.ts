@@ -125,7 +125,7 @@ ${tbl}
 <h2>Wat de tool doet</h2>
 <p>Kies de benzine en het volume van uw tankbeurt: de tool toont de maximumprijs van vandaag, die van morgen (het officiële tarief als het gepubliceerd is, anders een schatting), de datum van de laatste wijziging, de kost van de tankbeurt en het effect van de schommelingen over 7 dagen, 30 dagen en een jaar. Voor morgen alleen, met de wijzigingsfrequentie van benzine, ziet u ${h.a('essence-demain', 'benzineprijs morgen')}.</p>`,
   `
-<h2>Four petrols, four ceilings</h2>
+<h2>Four petrols, four price ceilings</h2>
 <p>The pump offers up to four kinds of petrol, and the official tariff sets a maximum price for each. 95 E10 is the reference for most petrol cars; 95 E5 contains less ethanol; 98, as E5 or E10, has a higher octane rating. ${lc}</p>
 ${tbl}
 <p>The excluding-VAT column repeats the latest tariff Statbel publishes on ${h.src('bestatDernier', 'be.STAT')}. 21% VAT is then added, and it is the VAT-inclusive price that the station may not exceed.</p>
@@ -164,7 +164,7 @@ export default defineGuide({
     title: 'Benzineprijs 2026: maximumprijs 95 E10, 95 E5 en 98 vandaag',
     description: 'Benzineprijs vandaag in België: officiële maximumprijs van 95 E10, 95 E5 en 98, de prijs van morgen, het verschil tussen E5 en E10 en de kost van uw tankbeurt.',
     h1: 'Benzineprijs vandaag',
-    intro: 'De officiële maximumprijs van de vier benzinesoorten in België, die van morgen en wat uw tankbeurt kost.',
+    intro: 'De officiële maximumprijs van de vier benzinesoorten in België, de benzineprijs van morgen en wat uw tankbeurt kost.',
     resume, faqs, body,
   },
   en: {

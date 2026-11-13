@@ -230,7 +230,7 @@ export const HOME: Record<Lang, Home> = {
     title: 'Prix mazout aujourd’hui et demain : tarif officiel 2026',
     description: 'Prix maximum officiel du mazout aujourd’hui et demain en Belgique, coût de votre livraison sous ou dès 2 000 litres et tous les carburants, sans téléphone.',
     h1: 'Prix du mazout aujourd’hui et demain',
-    intro: 'Le prix maximum officiel du jour et du lendemain, le montant de votre livraison, et une estimation chiffrée quand demain n’est pas encore publié.',
+    intro: 'Le prix maximum officiel du mazout, aujourd’hui et demain, le montant de votre livraison, et une estimation chiffrée quand demain n’est pas encore publié.',
     calcTitle: 'Tous les prix maximums, aujourd’hui et demain',
   },
   nl: {

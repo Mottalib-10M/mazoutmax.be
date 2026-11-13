@@ -66,7 +66,7 @@ export default defineGuide({
       const { saut, mo } = reperes(h);
       const dernier = mo[mo.length - 1];
       return `
-<h2>Lire la courbe</h2>
+<h2>Lire la courbe du prix du mazout</h2>
 <p>Choisissez un produit et une période : la courbe trace le prix maximum de chaque jour, les deux lignes fines marquent le plus bas et le plus haut de la période. Le résultat donne la variation entre le premier et le dernier jour affichés, et la traduit en euros sur le volume indiqué : 1 000 litres par défaut pour une livraison de mazout, 20 litres pour un achat à la pompe. Les plus bas et plus hauts sont datés, ce qui permet de retrouver un devis ou une facture de la même semaine.</p>
 <p>La courbe ne lisse rien. Les marches que l’on voit sont de vrais changements de tarif, et les paliers plats correspondent aux jours où le même prix maximum est resté en vigueur, comme souvent le week-end. Une variation forte sur trente jours peut donc disparaître sur un an, et l’inverse.</p>
 <h2>Les combustibles de chauffage sur un an</h2>
@@ -150,7 +150,7 @@ ${h.table(['Jaar', '&lt; 2.000 l', '≥ 2.000 l', 'Pomp'], tableAns(h), 'Jaargem
       const { saut, mo } = reperes(h);
       const dernier = mo[mo.length - 1];
       return `
-<h2>Reading the curve</h2>
+<h2>Reading the heating oil price curve</h2>
 <p>Pick a product and a period: the curve plots each day’s maximum price, and the two thin lines mark the period’s low and high. The result gives the change between the first and last days shown and turns it into euros on the volume entered: 1,000 litres by default for a heating oil delivery, 20 litres for a purchase at the pump. Lows and highs carry their date, so you can match them with a quote or invoice from the same week.</p>
 <p>The curve smooths nothing. The steps you see are real tariff changes, and the flat stretches are days on which the same maximum price stayed in force, as often happens over the weekend. A sharp move over thirty days can therefore vanish over a year, and the other way round.</p>
 <h2>Heating fuels over a year</h2>

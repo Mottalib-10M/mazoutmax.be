@@ -48,7 +48,7 @@ export default defineGuide({
     body: (h) => {
       const { pLt, pGe, s } = prix(h);
       return `
-<h2>Le coût d’une livraison selon le volume</h2>
+<h2>Le coût d’une livraison de mazout sous et au-delà de 2 000 litres</h2>
 ${h.table(['Volume', 'Palier', 'Prix maximum', 'Montant', 'Écart avec 2 000 L'], lignes(h, pLt, pGe), `Prix maximums TVA comprise du ${h.date(h.today)}. La dernière colonne donne ce que coûte en plus (ou en moins) une livraison de 2 000 litres.`, ['l', 'l', 'r', 'r', 'r'])}
 <p>Le tableau se lit de haut en bas : le montant grimpe avec le volume jusqu’à 2 000 litres, où le prix du litre change de palier. Juste en dessous du seuil, l’écart avec une livraison de 2 000 litres devient faible, puis négatif : vers ${h.num(s.equivalent)} litres, la grosse commande coûte autant que la petite, et au-delà elle coûte moins, tout en apportant plus de mazout.</p>
 <h2>Comment l’outil fait le calcul</h2>
@@ -85,7 +85,7 @@ ${h.table(['Volume', 'Palier', 'Prix maximum', 'Montant', 'Écart avec 2 000 L']
     body: (h) => {
       const { pLt, pGe, s } = prix(h);
       return `
-<h2>De kost van een levering per volume</h2>
+<h2>De kost van een mazoutlevering onder en boven 2.000 liter</h2>
 ${h.table(['Volume', 'Schijf', 'Maximumprijs', 'Bedrag', 'Verschil met 2.000 l'], lignes(h, pLt, pGe), `Maximumprijzen incl. btw van ${h.date(h.today)}. De laatste kolom toont wat een levering van 2.000 liter meer (of minder) kost.`, ['l', 'l', 'r', 'r', 'r'])}
 <p>De tabel leest u van boven naar onder: het bedrag stijgt met het volume tot 2.000 liter, waar de literprijs van schijf wisselt. Net onder de drempel wordt het verschil met een levering van 2.000 liter klein en daarna negatief: rond ${h.num(s.equivalent)} liter kost de grote bestelling evenveel als de kleine, en daarboven kost ze minder terwijl u meer mazout krijgt.</p>
 <h2>Hoe de tool rekent</h2>
@@ -122,7 +122,7 @@ ${h.table(['Volume', 'Schijf', 'Maximumprijs', 'Bedrag', 'Verschil met 2.000 l']
     body: (h) => {
       const { pLt, pGe, s } = prix(h);
       return `
-<h2>What a delivery costs, by volume</h2>
+<h2>What a heating oil delivery costs, below and above 2,000 litres</h2>
 ${h.table(['Volume', 'Band', 'Maximum price', 'Amount', 'Gap to 2,000 L'], lignes(h, pLt, pGe), `Maximum prices including VAT on ${h.date(h.today)}. The last column shows how much more (or less) a 2,000-litre delivery would cost.`, ['l', 'l', 'r', 'r', 'r'])}
 <p>Read the table from top to bottom: the amount rises with the volume up to 2,000 litres, where the price per litre switches band. Just below the threshold the gap to a 2,000-litre delivery shrinks, then turns negative: at around ${h.num(s.equivalent)} litres the big order costs the same as the small one, and above that it costs less while bringing more oil.</p>
 <h2>How the tool works it out</h2>

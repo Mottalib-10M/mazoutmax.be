@@ -106,7 +106,7 @@ const body = (h: Helpers) => {
     ['l', 'r', 'r', 'r']);
   const pas = d.stD.days / Math.max(1, d.stD.changed);
   return h.T(`
-<h2>${h.num(d.yrs.length)} années de moyennes annuelles</h2>
+<h2>Historique du prix des carburants : ${h.num(d.yrs.length)} années de moyennes annuelles</h2>
 <p>Le tableau reprend les moyennes annuelles du prix maximum publiées par Statbel pour quatre carburants. L’année en cours n’est pas close : sa moyenne porte sur les mois déjà écoulés.</p>
 ${tAn}
 <h2>Les douze derniers mois</h2>
@@ -121,7 +121,7 @@ ${tCh}
 <h2>Sources</h2>
 <p>Série quotidienne : ${h.src('bestatJour', 'be.STAT, 365 derniers jours')} ; moyennes mensuelles : ${h.src('bestatMois', 'be.STAT, 24 derniers mois')} ; moyennes annuelles : ${h.src('bestatAn', 'be.STAT, 8 dernières années')}. Données Statbel sous ${h.src('statbelLicence', 'licence CC BY 4.0')}, la série quotidienne commençant le ${h.date(d.debut)}.</p>`,
   `
-<h2>${h.num(d.yrs.length)} jaar jaargemiddelden</h2>
+<h2>Evolutie van de brandstofprijzen: ${h.num(d.yrs.length)} jaar jaargemiddelden</h2>
 <p>De tabel toont de jaargemiddelden van de maximumprijs die Statbel voor vier brandstoffen publiceert. Het lopende jaar is niet afgesloten: het gemiddelde slaat op de maanden die al voorbij zijn.</p>
 ${tAn}
 <h2>De voorbije twaalf maanden</h2>
@@ -136,7 +136,7 @@ ${tCh}
 <h2>Bronnen</h2>
 <p>Dagreeks: ${h.src('bestatJour', 'be.STAT, laatste 365 dagen')}; maandgemiddelden: ${h.src('bestatMois', 'be.STAT, laatste 24 maanden')}; jaargemiddelden: ${h.src('bestatAn', 'be.STAT, laatste 8 jaar')}. Gegevens van Statbel onder ${h.src('statbelLicence', 'licentie CC BY 4.0')}; de dagreeks begint op ${h.date(d.debut)}.</p>`,
   `
-<h2>${h.num(d.yrs.length)} years of yearly averages</h2>
+<h2>Fuel price history: ${h.num(d.yrs.length)} years of yearly averages</h2>
 <p>The table shows the yearly averages of the maximum price that Statbel publishes for four fuels. The current year is not closed: its average covers the months already gone.</p>
 ${tAn}
 <h2>The last twelve months</h2>
@@ -187,7 +187,7 @@ export default defineGuide({
     title: 'Fuel price history Belgium 2026: diesel, petrol and LPG',
     description: 'Fuel price history in Belgium: the diesel, petrol and LPG curve over a year, dated lows and highs, and the monthly and yearly averages from Statbel, 2026.',
     h1: 'Fuel price history',
-    intro: 'The maximum price curve of each fuel over a year, its lows and highs, and the monthly and yearly averages published by Statbel.',
+    intro: 'A year of fuel price history in Belgium: the maximum price curve of each fuel, its lows and highs, and the monthly and yearly averages published by Statbel.',
     resume, faqs, body,
   },
 });

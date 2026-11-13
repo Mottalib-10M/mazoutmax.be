@@ -69,7 +69,7 @@ export default defineGuide({
     title: 'Commander du mazout en 2026 : moment, volume et saisons',
     description: 'Commander du mazout au bon moment : ce que montrent un an de prix maximums, les moyennes mensuelles, l’effet d’une attente et le palier de 2 000 litres.',
     h1: 'Quand commander du mazout ? Ce que disent les données',
-    intro: 'Pas de prédiction du marché ici : l’historique officiel, ce qu’il montre et ce qu’il ne permet pas de conclure.',
+    intro: 'Pour commander du mazout, pas de prédiction du marché ici : l’historique officiel, ce qu’il montre et ce qu’il ne permet pas de conclure.',
     resume: (h) => {
       const d = D(h);
       const pos = d.now - d.r.mean;
@@ -106,7 +106,7 @@ ${h.table(['Année', 'Prix maximum moyen', 'Coût de 1 500 litres'], d.y.map(([a
 <p>Les ${h.src('bestatAn', 'moyennes annuelles')} rappellent que le budget d’une année dépend d’abord du niveau général des prix, sur lequel aucun ménage n’a prise. Pour chiffrer votre propre consommation, la page ${h.a('budget-chauffage', 'budget chauffage au mazout')} applique ces moyennes à vos litres.</p>
 <h2>Le jour de la semaine</h2>
 <p>Le tarif change souvent, mais pas n’importe quand. Sur un an, ${h.pct(1 - h.M.changeStats(K, 0).prob, 0)} des dimanches et ${h.pct(1 - h.M.changeStats(K, 1).prob, 0)} des lundis ont gardé le prix de la veille. Le reste de la semaine, un nouveau tarif est la règle plutôt que l’exception ; le guide du ${h.a('contrat-programme', 'contrat-programme')} en donne le décompte complet. Ce rythme ne dit pas si le prochain changement sera une hausse ou une baisse, et il ne permet donc pas de choisir un jour gagnant à coup sûr.</p>
-<h2>Le volume compte plus que la date</h2>
+<h2>Le volume commandé compte plus que la date</h2>
 <p>Contrairement au marché, le palier de volume est un levier que vous contrôlez. Le ${h.date(h.today)}, le litre livré à partir de 2 000 litres plafonne à ${h.l3(d.ge)}, contre ${h.l3(d.now)} en dessous. Commander 2 000 litres en une fois plutôt qu’en deux livraisons de 1 000 litres réduit le maximum facturable de ${h.eur(d.deux)}. Ce calcul suppose une citerne assez grande ; la page ${h.a('mazout-2000-litres', 'mazout 2 000 litres')} indique à partir de quel volume il vaut la peine de compléter jusqu’au seuil.</p>
 <h2>Le calendrier de l’aide</h2>
 <p>Pour les ménages qui peuvent prétendre à l’allocation du Fonds Social Chauffage, le moment de la livraison a deux effets. L’aide est plafonnée par année civile, si bien qu’une livraison de janvier compte pour la nouvelle année. Et la demande doit être introduite auprès de la cellule énergie du CPAS de la commune dans les ${h.num(h.P.fonds.delai_jours)} jours suivant la livraison, avec le formulaire, une copie de la facture et de la carte d’identité, selon la page ${h.src('fondsDemande', 'comment demander')} du Fonds. Le montant se calcule sur la page ${h.a('allocation-chauffage', 'allocation chauffage')}.</p>
@@ -121,7 +121,7 @@ ${h.table(['Année', 'Prix maximum moyen', 'Coût de 1 500 litres'], d.y.map(([a
     title: 'Mazout bestellen in 2026: moment, volume en seizoenen',
     description: 'Mazout bestellen op het juiste moment: wat een jaar maximumprijzen, de maandgemiddelden, het effect van wachten en de schijf vanaf 2.000 liter laten zien.',
     h1: 'Wanneer mazout bestellen? Wat de cijfers zeggen',
-    intro: 'Geen marktvoorspelling hier: de officiële geschiedenis, wat ze laat zien en wat je er niet uit kunt afleiden.',
+    intro: 'Geen marktvoorspelling hier voor wie mazout bestelt: de officiële geschiedenis, wat ze laat zien en wat je er niet uit kunt afleiden.',
     resume: (h) => {
       const d = D(h);
       const pos = d.now - d.r.mean;
@@ -158,7 +158,7 @@ ${h.table(['Jaar', 'Gemiddelde maximumprijs', 'Kost van 1.500 liter'], d.y.map((
 <p>De ${h.src('bestatAn', 'jaargemiddelden')} herinneren eraan dat het budget van een jaar vooral afhangt van het algemene prijsniveau, waarop geen gezin vat heeft. Om uw eigen verbruik door te rekenen, past de pagina ${h.a('budget-chauffage', 'stookbudget mazout')} die gemiddelden toe op uw liters.</p>
 <h2>De dag van de week</h2>
 <p>Het tarief verandert vaak, maar niet op elk moment. Over een jaar behielden ${h.pct(1 - h.M.changeStats(K, 0).prob, 0)} van de zondagen en ${h.pct(1 - h.M.changeStats(K, 1).prob, 0)} van de maandagen de prijs van de dag ervoor. De rest van de week is een nieuw tarief eerder regel dan uitzondering; de gids over de ${h.a('contrat-programme', 'programmaovereenkomst')} geeft de volledige telling. Dat ritme zegt niet of de volgende wijziging een stijging of een daling wordt, en laat dus niet toe met zekerheid een winnende dag te kiezen.</p>
-<h2>Het volume telt meer dan de datum</h2>
+<h2>Het bestelde volume telt meer dan de datum</h2>
 <p>Anders dan de markt is de volumeschijf een hefboom die u zelf in handen hebt. Op ${h.date(h.today)} ligt het plafond voor een liter geleverd vanaf 2.000 liter op ${h.l3(d.ge)}, tegenover ${h.l3(d.now)} daaronder. 2.000 liter in één keer bestellen in plaats van in twee leveringen van 1.000 liter verlaagt het maximaal factureerbare bedrag met ${h.eur(d.deux)}. Die berekening veronderstelt een tank die groot genoeg is; de pagina ${h.a('mazout-2000-litres', 'mazout 2.000 liter')} geeft aan vanaf welk volume aanvullen tot de drempel de moeite loont.</p>
 <h2>De kalender van de steun</h2>
 <p>Voor gezinnen die aanspraak kunnen maken op de toelage van het Sociaal Verwarmingsfonds heeft het moment van levering twee gevolgen. De steun is per kalenderjaar beperkt, zodat een levering in januari meetelt voor het nieuwe jaar. En de aanvraag moet bij de energiecel van het OCMW van de gemeente binnen ${h.num(h.P.fonds.delai_jours)} dagen na de levering gebeuren, met het formulier en een kopie van de factuur en van de identiteitskaart, volgens de pagina ${h.src('fondsDemande', 'toelage aanvragen')} van het Fonds. Het bedrag berekent u op de pagina ${h.a('allocation-chauffage', 'verwarmingstoelage')}.</p>
@@ -173,7 +173,7 @@ ${h.table(['Jaar', 'Gemiddelde maximumprijs', 'Kost van 1.500 liter'], d.y.map((
     title: 'Ordering heating oil in 2026: timing, volume and seasons',
     description: 'Ordering heating oil at the right time in Belgium: what a year of maximum prices, the monthly averages, the effect of waiting and the 2,000-litre band show.',
     h1: 'When to order heating oil: what the data say',
-    intro: 'No market forecast here: the official history, what it shows and what it does not allow you to conclude.',
+    intro: 'No market forecast here for ordering heating oil: the official history, what it shows and what it does not allow you to conclude.',
     resume: (h) => {
       const d = D(h);
       const pos = d.now - d.r.mean;
@@ -210,7 +210,7 @@ ${h.table(['Year', 'Average maximum price', 'Cost of 1,500 litres'], d.y.map(([a
 <p>The ${h.src('bestatAn', 'yearly averages')} are a reminder that a year’s budget depends first on the general price level, which no household controls. To price your own consumption, the ${h.a('budget-chauffage', 'heating oil budget')} page applies these averages to your litres.</p>
 <h2>The day of the week</h2>
 <p>The tariff changes often, but not at any time. Over a year, ${h.pct(1 - h.M.changeStats(K, 0).prob, 0)} of Sundays and ${h.pct(1 - h.M.changeStats(K, 1).prob, 0)} of Mondays kept the previous day’s price. For the rest of the week a new tariff is the rule rather than the exception; the guide to the ${h.a('contrat-programme', 'programme contract')} gives the full count. This rhythm does not say whether the next change will be a rise or a fall, so it cannot be used to pick a sure winning day.</p>
-<h2>Volume matters more than the date</h2>
+<h2>When ordering heating oil, volume matters more than the date</h2>
 <p>Unlike the market, the volume band is a lever you control. On ${h.date(h.today)} a litre delivered in orders of 2,000 litres or more is capped at ${h.l3(d.ge)}, against ${h.l3(d.now)} below that. Ordering 2,000 litres at once rather than in two 1,000-litre deliveries cuts the maximum that can be billed by ${h.eur(d.deux)}. The calculation assumes a tank that is large enough; the ${h.a('mazout-2000-litres', 'heating oil 2,000 litres')} page shows from what volume it is worth topping up to the threshold.</p>
 <h2>The allowance calendar</h2>
 <p>For households that may qualify for the Social Heating Fund allowance, the timing of delivery has two effects. Support is capped per calendar year, so a January delivery counts towards the new year. And the application must reach the energy unit of the municipal CPAS/OCMW within ${h.num(h.P.fonds.delai_jours)} days of delivery, with the form and copies of the invoice and identity card, according to the Fund’s ${h.src('fondsDemande', 'how to apply')} page. The amount is worked out on the ${h.a('allocation-chauffage', 'heating allowance')} page.</p>
