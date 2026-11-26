@@ -4,7 +4,7 @@
 @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400 700; font-display: swap; src: url('/fonts/inter-var.woff2') format('woff2'); }
 @theme {
   --color-navy-50: #f8fafc; --color-navy-100: #f1f5f9; --color-navy-200: #e2e8f0; --color-navy-300: #cbd5e1; --color-navy-400: #94a3b8; --color-navy-500: #64748b; --color-navy-600: #475569; --color-navy-700: #334155; --color-navy-800: #1e293b; --color-navy-900: #0f172a; --color-navy-950: #020617;
-  --color-accent-50: #fdedee; --color-accent-100: #fad6d9; --color-accent-200: #f5adb3; --color-accent-300: #ee7780; --color-accent-400: #e8404d; --color-accent-500: #A3141F; --color-accent-600: #8b111a; --color-accent-700: #720e16; --color-accent-800: #5b0b11; --color-accent-900: #48090e;
+  --color-accent-50: #EEEEEE; --color-accent-100: #DEDEDE; --color-accent-200: #B8B8B8; --color-accent-300: #888888; --color-accent-400: #4C4C4C; --color-accent-500: #111111; --color-accent-600: #0F0F0F; --color-accent-700: #0D0D0D; --color-accent-800: #0A0A0A; --color-accent-900: #080808;
   --color-success: #15803d; --color-warning: #b45309; --color-error: #dc2626;
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
@@ -74,3 +74,72 @@ h1 { font-weight: 700; } h2 { font-weight: 650; } h3 { font-weight: 600; }
   .clamp-more { display: inline-block; cursor: pointer; margin-left: 0.25rem; font-size: 0.875rem; font-weight: 600; color: var(--color-accent-700); text-decoration: underline; text-underline-offset: 3px; }
   .clamp-toggle:focus-visible ~ .clamp-more { outline: 2px solid var(--color-accent-500); outline-offset: 3px; }
 }
+
+/* === Charte du pays (refonte d'identité validée par l'éditeur, appliquée le 2026-11-25) ===
+   En-tête plein, bandeau héros, simulateur en carte, sections alternées, chiffres-résultats, boutons et pied
+   aux couleurs du pays ; l'échelle --color-accent-* du @theme porte la couleur forte. */
+@media (max-width:640px) { main table:not(:is(.overflow-x-auto, .overflow-auto, [class*='overflow-x']) table) { display:block; overflow-x:auto; max-width:100%; } }
+/* en-tête plein + filet */
+header nav[aria-label] { background:#111111 !important; border-bottom:5px solid #FDDA24 !important; backdrop-filter:none !important; }
+header nav[aria-label] :is(a, button, span, svg, summary) { color:#fff !important; }
+header nav[aria-label] > div:first-child > a span[class*="accent"], header nav[aria-label] a > span > span { color:#FDDA24 !important; }
+header nav[aria-label] :is(a, button, summary)[class*="border"] { border-color:rgba(255,255,255,.7) !important; background:transparent !important; }
+header nav[aria-label] > div :is(a, button, summary):hover { background:rgba(255,255,255,.16) !important; }
+header nav[aria-label] .burger span, header nav[aria-label] .burger::before, header nav[aria-label] .burger::after { background:#fff !important; }
+header nav img { background:#fff; border-radius:8px; padding:2px; }
+header nav :is(#mobile-menu, .nav-dropdown-panel, [class*="absolute"], [class~="bg-white"]:not(nav)) { background:#fff !important; }
+header nav :is(#mobile-menu, .nav-dropdown-panel, [class*="absolute"], [class~="bg-white"]:not(nav)) :is(a, button, span, svg, p, li, summary) { color:#0F172A !important; }
+/* bandeau héros pleine largeur dans la couleur forte */
+main > div:has(> header > h1) { padding-top:0 !important; }
+main > div:first-child:not(:has(> header > h1)):has(~ div > header > h1) { background:#111111 !important; box-shadow:0 0 0 100vmax #111111; clip-path:inset(0 -100vmax); margin-top:0 !important; margin-bottom:0 !important; padding-top:10px !important; padding-bottom:2px !important; }
+main > div:first-child:not(:has(> header > h1)):has(~ div > header > h1) * { color:#fff !important; }
+main > div > header:has(> h1),
+main > div > header:has(> h1) ~ *:not(astro-island, style, script):not(:has(.rechner)):has(~ [data-outil], ~ astro-island > .rechner):not([data-outil] ~ *, astro-island:has(> .rechner) ~ *),
+main > div > :is([data-outil], astro-island:has(> .rechner)) { background:#111111 !important; box-shadow:0 0 0 100vmax #111111; clip-path:inset(0 -100vmax); margin-top:0 !important; margin-bottom:-1px !important; border:0 !important; }
+main > div > header:has(> h1) { padding:26px 0 16px !important; }
+main > div > astro-island:has(> .rechner) > .rechner { box-shadow:0 0 0 100vmax #111111; clip-path:inset(-2px -100vmax -34px -100vmax); margin-bottom:34px; }
+main > div > header:has(> h1) ~ *:not(astro-island, style, script):not(:has(.rechner)):has(~ [data-outil], ~ astro-island > .rechner):not([data-outil] ~ *, astro-island:has(> .rechner) ~ *) { padding-bottom:14px !important; }
+main > div > header:has(> h1) *:not([class*="bg-"]):not(main > div > header [class*="bg-"] *), main > div > header:has(> h1) ~ *:not(astro-island, style, script):not(:has(.rechner)):has(~ [data-outil], ~ astro-island > .rechner):not([data-outil] ~ *, astro-island:has(> .rechner) ~ *):not(a), main > div > header:has(> h1) ~ *:not(astro-island, style, script):not(:has(.rechner)):has(~ [data-outil], ~ astro-island > .rechner):not([data-outil] ~ *, astro-island:has(> .rechner) ~ *) :not(a, a *) { color:#fff !important; }
+main > div > header:has(> h1) h1 { color:#fff !important; letter-spacing:-0.02em; }
+main > div > header:has(> h1) a { text-decoration:underline; text-decoration-color:#FDDA24; text-decoration-thickness:2px; text-underline-offset:4px; }
+main > div > header:has(> h1) ~ *:not(astro-island, style, script):not(:has(.rechner)):has(~ [data-outil], ~ astro-island > .rechner):not([data-outil] ~ *, astro-island:has(> .rechner) ~ *) a:not(#_v3) { color:#fff !important; background:transparent !important; text-decoration:underline; text-decoration-color:#FDDA24; text-decoration-thickness:2px; text-underline-offset:4px; }
+main > div > header:has(> h1) ~ *:not(astro-island, style, script):not(:has(.rechner)):has(~ [data-outil], ~ astro-island > .rechner):not([data-outil] ~ *, astro-island:has(> .rechner) ~ *) a:has(> *):not(#_v3) { background:#fff !important; color:#0F172A !important; border:0 !important; border-left:5px solid #FDDA24 !important; border-radius:10px; text-decoration:none; }
+main > div > header:has(> h1) ~ *:not(astro-island, style, script):not(:has(.rechner)):has(~ [data-outil], ~ astro-island > .rechner):not([data-outil] ~ *, astro-island:has(> .rechner) ~ *) a:has(> *):not(#_v3) * { color:#0F172A !important; }
+main > div > :is([data-outil], astro-island:has(> .rechner)) { padding:4px 0 34px !important; margin-bottom:26px !important; }
+main > div > :is([data-outil], astro-island:has(> .rechner)) > :is(p,span,small,a,h2,h3,label) { color:#fff !important; }
+main [data-outil] astro-island > div:first-child, main [data-outil] > div:not(astro-island):first-child, main astro-island > .rechner { border-top:6px solid #FDDA24 !important; border-radius:14px; background:#fff; color:#0F172A; }
+/* boutons pleins de la 2e couleur */
+nav[data-profils] p { color:#fff !important; }
+nav[data-profils] a, main a[class*="bg-accent-50"]:not([data-outil] *), main a[class*="border-accent"]:not(:has(> span.block, > h3, > p, > div, > span + span)) { background:#FDDA24 !important; color:#111111 !important; border-color:#FDDA24 !important; border-radius:10px; font-weight:600; }
+nav[data-profils] a *, main a[class*="border-accent"] * { color:inherit !important; }
+main a[class*="border-accent"]:hover, nav[data-profils] a:hover { background:#D7B91F !important; }
+main button:is([class~="bg-accent-500"],[class~="bg-accent-600"],[class~="bg-accent-700"]), main a:is([class~="bg-accent-500"],[class~="bg-accent-600"],[class~="bg-accent-700"]), main button[type="submit"] { background:#FDDA24 !important; color:#111111 !important; border-color:#FDDA24 !important; }
+main button:is([class~="bg-accent-500"],[class~="bg-accent-600"],[class~="bg-accent-700"]) *, main a:is([class~="bg-accent-500"],[class~="bg-accent-600"],[class~="bg-accent-700"]) * { color:inherit !important; }
+main button:is([class~="bg-accent-500"],[class~="bg-accent-600"],[class~="bg-accent-700"]):hover, main button[type="submit"]:hover { background:#D7B91F !important; }
+/* cartes-liens : carte blanche, bord de l'accent, texte sombre */
+main a:is([class*="rounded"]):has(> span.block, > h3, > p, > div, > span + span):not(header a) { background:#fff !important; color:#0F172A !important; border:2px solid #BCBCBC !important; border-left:6px solid #FDDA24 !important; }
+main a:is([class*="rounded"]):has(> span.block, > h3, > p, > div, > span + span):not(header a) :is(span,h3,p,div,strong,small) { color:#1E293B !important; }
+main a:is([class*="rounded"]):has(> span.block, > h3, > p, > div, > span + span):not(header a) :is(span,h3,strong):first-child { color:#111111 !important; }
+/* chiffres-résultats grands, dans l'accent, sur fond teinté */
+main [data-outil] [class*="tabular-nums"][class*="font-bold"] { color:#111111 !important; line-height:1.1; }
+main [data-outil] [class*="tabular-nums"][class*="font-bold"]:not([class*="text-4xl"]):not([class*="text-5xl"]):not([class*="text-[2"]) { font-size:2rem !important; }
+main [data-outil] div:has(> [class*="tabular-nums"][class*="font-bold"]) { background:#E7E7E7 !important; border-left:5px solid #FDDA24; border-radius:10px; padding:10px 14px; }
+main [class*="bg-accent-50"]:not(a) { background:#E7E7E7 !important; border-left:5px solid #FDDA24; }
+/* sections alternées blanc / teinte */
+main > div > section:nth-of-type(even), main > div > div.mt-8:has(> details.fold) { background:#E7E7E7 !important; box-shadow:0 0 0 100vmax #E7E7E7; clip-path:inset(0 -100vmax); padding-top:18px; padding-bottom:22px; }
+main h2 { color:#111111 !important; }
+main section > h2, main .prose h2, main section > div > h2 { display:block; padding-bottom:6px; border-bottom:5px solid #FDDA24; width:fit-content; max-width:100%; }
+main details.fold > summary h2, main .fold-h { border-left:6px solid #FDDA24; padding-left:10px; }
+main table thead th { color:#111111 !important; border-bottom-color:transparent !important; box-shadow:inset 0 -3px 0 #FDDA24; }
+main details { border-color:#BCBCBC !important; }
+main details[open] > summary, main details > summary:hover { background:#E7E7E7; }
+/* texte grisé : foncé sur les fonds teintés */
+main :where([class*="text-navy-400"],[class*="text-navy-500"],[class*="text-slate-500"],[class*="text-gray-500"],[class*="text-navy-600"]) { color:#475569 !important; }
+/* liens soulignés colorés */
+main .prose a, main p a { color:#111111 !important; text-decoration:underline; text-decoration-color:#FDDA24; text-decoration-thickness:2px; text-underline-offset:4px; text-underline-offset:3px; }
+/* pied plein sombre */
+footer { background:#060606 !important; border-top:5px solid #FDDA24 !important; }
+footer, footer * { color:#E5E7EB !important; border-color:rgba(255,255,255,.18) !important; }
+footer a:hover { color:#fff !important; }
+footer [class*="bg-"] { background:transparent !important; }
+/* === fin de la charte du pays === */
